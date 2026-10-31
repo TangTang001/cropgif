@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-29",
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "viteVersion": "7.1.7",
+    "note": "Final index.html, client, metadata scanner and Worker engines built successfully; dev-only sample middleware is not included in dist."
+  },
+  "syntax": {
+    "javascript": "node --check on all src/*.js and scripts/*.mjs passed",
+    "python": "py_compile of prepare.py, verify.py, analyze-cross.py passed"
+  },
+  "metadataChecks": {
+    "command": "node scripts/test-meta.mjs",
+    "result": "PASS",
+    "coverage": ["zero delay", "loop extension presence and value", "transparency index", "malformed header and truncated input", "crop bounds"]
+  },
+  "browserMatrices": {
+    "chrome": {"directory": "runs/final-chrome", "samples": 38, "cases": 384, "configurations": ["A", "B", "B-strict"]},
+    "edge": {"directory": "runs/final-edge", "samples": 38, "cases": 256, "configurations": ["A", "B"]},
+    "note": "Matrices include expected rejections and known differences, not 640 successful correctness checks."
+  },
+  "ui": {
+    "evidence": "runs/ui-final-chrome/ui-checks.json",
+    "gifDownload": true,
+    "jsonLogDownload": true,
+    "staleResultInvalidation": true,
+    "invalidFileRecovery": true,
+    "noHorizontalOverflowAt390px": true,
+    "browserErrors": []
+  },
+  "independentVerification": {
+    "pillowReports": ["runs/final-chrome/verification.json", "runs/final-edge/verification.json"],
+    "nativeCrossCheck": "runs/final-chrome/chrome-reference/comparison.json",
+    "referenceNote": "Pillow and Chrome differ on some partial-frame backgrounds; native comparison is a targeted 7-file subset, not all input files."
+  },
+  "integrity": "integrity-check.json",
+  "knownFailures": "测试报告.md",
+  "notVerified": ["real mobile devices", "Safari", "Firefox", "peak total process/WASM memory", "timeout fault injection", "full multi-loop visual viewing of every animation", "production deployment performance"]
+}

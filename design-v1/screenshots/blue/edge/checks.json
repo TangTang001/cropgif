@@ -1,0 +1,36 @@
+{
+  "browser": "156.0.4314.50",
+  "defaultFullImage": true,
+  "numericDimensions": true,
+  "pointerMove": {
+    "x": 120,
+    "y": 70,
+    "width": 560,
+    "height": 360
+  },
+  "pointerResize": true,
+  "squarePointerResize": true,
+  "keyboardMove": true,
+  "squareMode": true,
+  "invalidDimensionsBlocked": true,
+  "resultInvalidation": true,
+  "invalidFileRecovery": true,
+  "actualGifDownload": {
+    "width": 560,
+    "height": 360,
+    "frames": 16,
+    "allFrameDelaysMs": 100,
+    "loop": 0,
+    "bytes": 133302
+  },
+  "narrowLayoutNoOverflow": true,
+  "note": "UI draft smoke check; not the full product/browser/capacity acceptance",
+  "pageErrors": [],
+  "palette": {
+    "page": "#FFFFFF",
+    "editor": "#F5F6F8",
+    "primary": "#2563EB",
+    "hover": "#1D4ED8",
+    "selected": "#EFF6FF"
+  }
+}

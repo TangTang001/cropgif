@@ -1,0 +1,33 @@
+# Dependencies, builds, caches and local toolchains
+**/node_modules/
+**/dist/
+**/.vite/
+**/.npm-cache/
+**/__pycache__/
+**/.dependency-install-incomplete-*/
+*.py[cod]
+*.log
+/test-resources/crop-benchmark/tools/
+/test-resources/crop-benchmark/vendor/
+
+# Keep compact acceptance summaries; regenerate bulky run outputs locally.
+/test-resources/crop-benchmark/runs/**
+!/test-resources/crop-benchmark/runs/*summary.json
+!/test-resources/crop-benchmark/runs/stage1-final-chrome/
+!/test-resources/crop-benchmark/runs/stage1-final-edge/
+!/test-resources/crop-benchmark/runs/stage1-safety-owned-workers/
+/test-resources/crop-benchmark/runs/stage1-final-chrome/*
+/test-resources/crop-benchmark/runs/stage1-final-edge/*
+/test-resources/crop-benchmark/runs/stage1-safety-owned-workers/*
+!/test-resources/crop-benchmark/runs/stage1-final-chrome/*.json
+!/test-resources/crop-benchmark/runs/stage1-final-edge/*.json
+!/test-resources/crop-benchmark/runs/stage1-safety-owned-workers/checks.json
+!/test-resources/crop-benchmark/runs/stage1-safety-owned-workers/unit-tests.tap
+
+# Local credentials and operating system files
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+Desktop.ini

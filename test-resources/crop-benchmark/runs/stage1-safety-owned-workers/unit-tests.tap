@@ -1,0 +1,50 @@
+
+> test
+> node --test tests/core.test.mjs
+
+TAP version 13
+# Subtest: limits accept the exact bound and reject the next smaller allowance
+ok 1 - limits accept the exact bound and reject the next smaller allowance
+  ---
+  duration_ms: 3.6785
+  type: 'test'
+  ...
+# Subtest: actual default canvas, frame-count, total-pixel and file-size boundaries
+ok 2 - actual default canvas, frame-count, total-pixel and file-size boundaries
+  ---
+  duration_ms: 4.8724
+  type: 'test'
+  ...
+# Subtest: oversized file is rejected before reading bytes; empty MIME is accepted
+ok 3 - oversized file is rejected before reading bytes; empty MIME is accepted
+  ---
+  duration_ms: 1.3845
+  type: 'test'
+  ...
+# Subtest: invalid headers, truncated data and invalid crop are classified
+ok 4 - invalid headers, truncated data and invalid crop are classified
+  ---
+  duration_ms: 1.6008
+  type: 'test'
+  ...
+# Subtest: unknown errors and memory errors are not called file corruption
+ok 5 - unknown errors and memory errors are not called file corruption
+  ---
+  duration_ms: 0.8744
+  type: 'test'
+  ...
+# Subtest: raw metadata retains loop absence, raw delays and tolerated no-trailer behavior
+ok 6 - raw metadata retains loop absence, raw delays and tolerated no-trailer behavior
+  ---
+  duration_ms: 15.324
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 251.1223

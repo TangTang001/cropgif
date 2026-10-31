@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GIF crop — core development</title></head>
+<body>
+  <main>
+    <h1>GIF crop</h1>
+    <p>Development stage 1: local processing core. Crop controls are being developed.</p>
+    <label>Choose a GIF <input id="file" type="file" accept=".gif,image/gif"></label>
+    <p id="info"></p><button id="crop" disabled>Crop full image</button>
+    <p id="status" role="status">Choose a local GIF to begin.</p>
+    <img id="preview" alt="Processed GIF" hidden>
+    <a id="download" download="cropped.gif" hidden>Download GIF</a>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

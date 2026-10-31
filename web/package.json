@@ -1,0 +1,17 @@
+{
+  "name": "gif-crop-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test tests/core.test.mjs"
+  },
+  "dependencies": {
+    "gifenc": "1.0.3",
+    "gifsicle-wasm-browser": "1.5.19",
+    "gifuct-js": "2.1.2",
+    "vite": "https://registry.npmjs.org/vite/-/vite-7.1.7.tgz"
+  }
+}
