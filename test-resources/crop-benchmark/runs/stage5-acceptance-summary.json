@@ -1,0 +1,328 @@
+{
+  "stage": 5,
+  "date": "2026-11-02",
+  "unitTests": {
+    "passed": 13,
+    "source": "previous run in this task; core unchanged"
+  },
+  "staticPublication": {
+    "pages": [
+      "/",
+      "/privacy/",
+      "/licenses/"
+    ],
+    "files": [
+      "_headers",
+      "apple-touch-icon.png",
+      "assets/home-JK4Hndam.js",
+      "assets/styles-uQmwIfLI.css",
+      "assets/worker-KiqjWQdn.js",
+      "favicon.png",
+      "favicon.svg",
+      "index.html",
+      "licenses/gifenc-LICENSE.txt",
+      "licenses/gifsicle-COPYING.txt",
+      "licenses/gifsicle-wasm-browser-LICENSE.txt",
+      "licenses/gifuct-js-LICENSE.txt",
+      "licenses/index.html",
+      "licenses/js-binary-schema-parser-LICENSE.txt",
+      "privacy/index.html",
+      "robots.txt",
+      "sitemap.xml",
+      "social.png"
+    ],
+    "checks": "canonical, H1, description, internal targets, sitemap, icons, original license bytes, publication file allowlist",
+    "sha256": {
+      "_headers": "7adfc9d081df47326b338a222a5b2cc931d6dcafd75581391fe36380ca40a1ca",
+      "apple-touch-icon.png": "849d5e0574a315dea9bf24fdef7cd47dcdf87f88ba588a6dff1f56e7d907bee6",
+      "assets/home-JK4Hndam.js": "b624dd82bc0693c93aaf46bde9aa76a4840d9125d6808a589554cc435032decd",
+      "assets/styles-uQmwIfLI.css": "0f002856744be43d01f00fcd0d20c93b0923f8500c22e32eec30fd82427b97bc",
+      "assets/worker-KiqjWQdn.js": "39c2f1b5ae9455ee6e8b8cac28aeec3acf7b62cb5311d33b26b33812e6eaee77",
+      "favicon.png": "70e2742873f23b2b6b86f5193b6d8e88a3a7afd9e5073c78d59b26791a754e71",
+      "favicon.svg": "440f030ad4a3959276ffb1f9d2c0ad76c10e696fa3d4852759bbaee532466e18",
+      "index.html": "75cfc49e34973130cc42b4c63c1897bedc5947d6e1f687c232c2fd7c130ad38a",
+      "licenses/gifenc-LICENSE.txt": "47bc590c39d8ccccfc544875a9faebf44bafa828ef20315b396b5d0629f0cfd6",
+      "licenses/gifsicle-COPYING.txt": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "licenses/gifsicle-wasm-browser-LICENSE.txt": "136a5521fed6464d65ceb2316dfae9c58e72355fe6c7dd7ac161273e51b318c1",
+      "licenses/gifuct-js-LICENSE.txt": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+      "licenses/index.html": "b056c23255e75b4e510199c98c6e9a34e7735be7d3f1b27518a7bcef0257d07b",
+      "licenses/js-binary-schema-parser-LICENSE.txt": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+      "privacy/index.html": "bc19d52d7218783a94f79cf2f55595579f49d0eb41ec7dd3e35be57f4db2bfe2",
+      "robots.txt": "2845a6792fb1fbe5a89ca154b9b3427fdcd032667641c0b03046654b6685d4b3",
+      "sitemap.xml": "55c8ee6c5888ec047de0c5a3649513b6cffb686dc6d535b0631852a89900920e",
+      "social.png": "ec2c0f766e1b60dddb4ddb3d9cb26571ec9377f42112e770918a67f96a397726"
+    }
+  },
+  "cleanInstall": {
+    "passed": false,
+    "reason": "first attempt ECONNRESET; retry stopped after prolonged no progress"
+  },
+  "wasmSourceMapping": "unresolved",
+  "deployment": "not performed",
+  "browsers": {
+    "chrome": {
+      "flow": {
+        "checks": {
+          "checks": [
+            "empty/ready/success; safe actual filenames; second download matches current Worker bytes",
+            "real A fallback download uses current successful bytes",
+            "all three known complex crops refuse without download, then recover",
+            "real corrupt LZW cannot bypass refusal; next valid file succeeds",
+            "controlled UI timeout terminates parent and child; controls and original selection recover"
+          ],
+          "states": [
+            "empty",
+            "loading",
+            "ready",
+            "processing",
+            "success",
+            "error"
+          ],
+          "stats": {
+            "created": 26,
+            "terminated": 26,
+            "activePageURLs": 2
+          },
+          "controlledTimeoutMs": 350,
+          "postTimeoutChildPulsesStopped": true,
+          "errors": [],
+          "remoteRequests": []
+        },
+        "environment": {
+          "browser": "155.0.8059.39",
+          "date": "2026-11-02T07:03:24.478Z",
+          "platform": "win32",
+          "cpu": "13th Gen Intel(R) Core(TM) i7-13700H",
+          "systemMemoryBytes": 16836689920,
+          "sourceSha256": {
+            "src/config.js": "a0a73a40add90c319ba6c8ce1efb369747ac7ef8c7fcf5efaad586b9982ec32a",
+            "src/main.js": "88e6dfd4c95dbcc482566602ac3a0de8575925e84ab4a279927479d485d79109",
+            "src/styles.css": "1b7ccc598f8edbfd229a74fd1c613985f16414b0cd062f26e3887db1929623bc",
+            "src/gif/child-worker.js": "26b1721af56395f6a0a69e93c89202787f0131d3ee3bc1e28fcb9435f0d2c42a",
+            "src/gif/client.js": "acd0c10e351680478ee984def705574aa9b918bb11cc5a8b4f5749632dd90b35",
+            "src/gif/engine-a.js": "5b0af469c7fcd3833bc810bfbf7b9bdfe3c9e0505fd7baa6a12e7856eb04bf46",
+            "src/gif/engine-b.js": "44dcba64fe2eb5a2122af024d0366cea8b908c3ed4cdfd7085ef162befcc54be",
+            "src/gif/errors.js": "45de0e66cd1b3a69f3f5dd0ea2477e3c06f405f642e80667b0f316f795278879",
+            "src/gif/hybrid.js": "f8e9b99acb49b3243d396f766fcfc23235e59f02f359b5db60a8a898aede5144",
+            "src/gif/inspect.js": "56f7b7878eb2365202a1593f6466ffc35ca37b922738fef496e1cf73a4ad346d",
+            "src/gif/worker.js": "a17b827d608b5c48a6cf29b75a796ce0564020266422a68fa37751928c5ad531",
+            "src/crop/filename.js": "b6d7bf6842db99dce3af91c06544a8d8b59aea9cd25139c9be29ec62b094239b",
+            "src/crop/geometry.js": "5d156e22a4716b36a8d2cde5823eb27f763568639099eceee869d6ab2f01fd6e",
+            "dist/apple-touch-icon.png": "849d5e0574a315dea9bf24fdef7cd47dcdf87f88ba588a6dff1f56e7d907bee6",
+            "dist/favicon.png": "70e2742873f23b2b6b86f5193b6d8e88a3a7afd9e5073c78d59b26791a754e71",
+            "dist/favicon.svg": "440f030ad4a3959276ffb1f9d2c0ad76c10e696fa3d4852759bbaee532466e18",
+            "dist/index.html": "75cfc49e34973130cc42b4c63c1897bedc5947d6e1f687c232c2fd7c130ad38a",
+            "dist/robots.txt": "2845a6792fb1fbe5a89ca154b9b3427fdcd032667641c0b03046654b6685d4b3",
+            "dist/sitemap.xml": "55c8ee6c5888ec047de0c5a3649513b6cffb686dc6d535b0631852a89900920e",
+            "dist/social.png": "ec2c0f766e1b60dddb4ddb3d9cb26571ec9377f42112e770918a67f96a397726",
+            "dist/_headers": "7adfc9d081df47326b338a222a5b2cc931d6dcafd75581391fe36380ca40a1ca",
+            "dist/privacy/index.html": "bc19d52d7218783a94f79cf2f55595579f49d0eb41ec7dd3e35be57f4db2bfe2",
+            "dist/licenses/gifenc-LICENSE.txt": "47bc590c39d8ccccfc544875a9faebf44bafa828ef20315b396b5d0629f0cfd6",
+            "dist/licenses/gifsicle-COPYING.txt": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+            "dist/licenses/gifsicle-wasm-browser-LICENSE.txt": "136a5521fed6464d65ceb2316dfae9c58e72355fe6c7dd7ac161273e51b318c1",
+            "dist/licenses/gifuct-js-LICENSE.txt": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+            "dist/licenses/index.html": "4a14b2ed34b235bc5f4fb3778869fa163dd500c135f71effce2e9856dcd143ad",
+            "dist/licenses/js-binary-schema-parser-LICENSE.txt": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+            "dist/assets/home-JK4Hndam.js": "b624dd82bc0693c93aaf46bde9aa76a4840d9125d6808a589554cc435032decd",
+            "dist/assets/styles-uQmwIfLI.css": "0f002856744be43d01f00fcd0d20c93b0923f8500c22e32eec30fd82427b97bc",
+            "dist/assets/worker-KiqjWQdn.js": "39c2f1b5ae9455ee6e8b8cac28aeec3acf7b62cb5311d33b26b33812e6eaee77",
+            "index.html": "0f05113c5ce7f612ecef1c723468c5772ff27fbbe5b4e704a79ee0597bdf2555",
+            "package.json": "05d1cf1a4b5da1ce0c2b4fc8184dd7fe04153a4aa2e5c1d4565f4a8685cd6653",
+            "package-lock.json": "c98423a2021c5756378c70ca4412cecca39ac8641d30ec4af49784d08d41a311"
+          },
+          "productionStaticPreview": true,
+          "memoryMeasurement": "Process memory peak not measured."
+        }
+      },
+      "publication": {
+        "checks": {
+          "checks": [
+            "/: HTTP 200, canonical, single H1, desktop and 390px no overflow",
+            "/privacy/: HTTP 200, canonical, single H1, desktop and 390px no overflow",
+            "/licenses/: HTTP 200, canonical, single H1, desktop and 390px no overflow",
+            "static files served; privacy navigation and GitHub support entry present"
+          ],
+          "errors": [],
+          "remoteRequests": []
+        },
+        "environment": {
+          "browser": "155.0.8059.39",
+          "date": "2026-11-02T07:17:41.077Z",
+          "platform": "win32",
+          "cpu": "13th Gen Intel(R) Core(TM) i7-13700H",
+          "systemMemoryBytes": 16836689920,
+          "sourceSha256": {
+            "src/config.js": "a0a73a40add90c319ba6c8ce1efb369747ac7ef8c7fcf5efaad586b9982ec32a",
+            "src/main.js": "88e6dfd4c95dbcc482566602ac3a0de8575925e84ab4a279927479d485d79109",
+            "src/styles.css": "1b7ccc598f8edbfd229a74fd1c613985f16414b0cd062f26e3887db1929623bc",
+            "src/gif/child-worker.js": "26b1721af56395f6a0a69e93c89202787f0131d3ee3bc1e28fcb9435f0d2c42a",
+            "src/gif/client.js": "acd0c10e351680478ee984def705574aa9b918bb11cc5a8b4f5749632dd90b35",
+            "src/gif/engine-a.js": "5b0af469c7fcd3833bc810bfbf7b9bdfe3c9e0505fd7baa6a12e7856eb04bf46",
+            "src/gif/engine-b.js": "44dcba64fe2eb5a2122af024d0366cea8b908c3ed4cdfd7085ef162befcc54be",
+            "src/gif/errors.js": "45de0e66cd1b3a69f3f5dd0ea2477e3c06f405f642e80667b0f316f795278879",
+            "src/gif/hybrid.js": "f8e9b99acb49b3243d396f766fcfc23235e59f02f359b5db60a8a898aede5144",
+            "src/gif/inspect.js": "56f7b7878eb2365202a1593f6466ffc35ca37b922738fef496e1cf73a4ad346d",
+            "src/gif/worker.js": "a17b827d608b5c48a6cf29b75a796ce0564020266422a68fa37751928c5ad531",
+            "src/crop/filename.js": "b6d7bf6842db99dce3af91c06544a8d8b59aea9cd25139c9be29ec62b094239b",
+            "src/crop/geometry.js": "5d156e22a4716b36a8d2cde5823eb27f763568639099eceee869d6ab2f01fd6e",
+            "dist/apple-touch-icon.png": "849d5e0574a315dea9bf24fdef7cd47dcdf87f88ba588a6dff1f56e7d907bee6",
+            "dist/favicon.png": "70e2742873f23b2b6b86f5193b6d8e88a3a7afd9e5073c78d59b26791a754e71",
+            "dist/favicon.svg": "440f030ad4a3959276ffb1f9d2c0ad76c10e696fa3d4852759bbaee532466e18",
+            "dist/index.html": "75cfc49e34973130cc42b4c63c1897bedc5947d6e1f687c232c2fd7c130ad38a",
+            "dist/robots.txt": "2845a6792fb1fbe5a89ca154b9b3427fdcd032667641c0b03046654b6685d4b3",
+            "dist/sitemap.xml": "55c8ee6c5888ec047de0c5a3649513b6cffb686dc6d535b0631852a89900920e",
+            "dist/social.png": "ec2c0f766e1b60dddb4ddb3d9cb26571ec9377f42112e770918a67f96a397726",
+            "dist/_headers": "7adfc9d081df47326b338a222a5b2cc931d6dcafd75581391fe36380ca40a1ca",
+            "dist/privacy/index.html": "bc19d52d7218783a94f79cf2f55595579f49d0eb41ec7dd3e35be57f4db2bfe2",
+            "dist/licenses/gifenc-LICENSE.txt": "47bc590c39d8ccccfc544875a9faebf44bafa828ef20315b396b5d0629f0cfd6",
+            "dist/licenses/gifsicle-COPYING.txt": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+            "dist/licenses/gifsicle-wasm-browser-LICENSE.txt": "136a5521fed6464d65ceb2316dfae9c58e72355fe6c7dd7ac161273e51b318c1",
+            "dist/licenses/gifuct-js-LICENSE.txt": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+            "dist/licenses/index.html": "b056c23255e75b4e510199c98c6e9a34e7735be7d3f1b27518a7bcef0257d07b",
+            "dist/licenses/js-binary-schema-parser-LICENSE.txt": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+            "dist/assets/home-JK4Hndam.js": "b624dd82bc0693c93aaf46bde9aa76a4840d9125d6808a589554cc435032decd",
+            "dist/assets/styles-uQmwIfLI.css": "0f002856744be43d01f00fcd0d20c93b0923f8500c22e32eec30fd82427b97bc",
+            "dist/assets/worker-KiqjWQdn.js": "39c2f1b5ae9455ee6e8b8cac28aeec3acf7b62cb5311d33b26b33812e6eaee77",
+            "index.html": "0f05113c5ce7f612ecef1c723468c5772ff27fbbe5b4e704a79ee0597bdf2555",
+            "package.json": "05d1cf1a4b5da1ce0c2b4fc8184dd7fe04153a4aa2e5c1d4565f4a8685cd6653",
+            "package-lock.json": "c98423a2021c5756378c70ca4412cecca39ac8641d30ec4af49784d08d41a311"
+          },
+          "productionStaticPreview": true,
+          "memoryMeasurement": "Process memory peak not measured."
+        }
+      }
+    },
+    "edge": {
+      "flow": {
+        "checks": {
+          "checks": [
+            "empty/ready/success; safe actual filenames; second download matches current Worker bytes",
+            "real A fallback download uses current successful bytes",
+            "all three known complex crops refuse without download, then recover",
+            "real corrupt LZW cannot bypass refusal; next valid file succeeds",
+            "controlled UI timeout terminates parent and child; controls and original selection recover"
+          ],
+          "states": [
+            "empty",
+            "loading",
+            "ready",
+            "processing",
+            "success",
+            "error"
+          ],
+          "stats": {
+            "created": 26,
+            "terminated": 26,
+            "activePageURLs": 2
+          },
+          "controlledTimeoutMs": 350,
+          "postTimeoutChildPulsesStopped": true,
+          "errors": [],
+          "remoteRequests": []
+        },
+        "environment": {
+          "browser": "156.0.4314.58",
+          "date": "2026-11-02T07:03:33.405Z",
+          "platform": "win32",
+          "cpu": "13th Gen Intel(R) Core(TM) i7-13700H",
+          "systemMemoryBytes": 16836689920,
+          "sourceSha256": {
+            "src/config.js": "a0a73a40add90c319ba6c8ce1efb369747ac7ef8c7fcf5efaad586b9982ec32a",
+            "src/main.js": "88e6dfd4c95dbcc482566602ac3a0de8575925e84ab4a279927479d485d79109",
+            "src/styles.css": "1b7ccc598f8edbfd229a74fd1c613985f16414b0cd062f26e3887db1929623bc",
+            "src/gif/child-worker.js": "26b1721af56395f6a0a69e93c89202787f0131d3ee3bc1e28fcb9435f0d2c42a",
+            "src/gif/client.js": "acd0c10e351680478ee984def705574aa9b918bb11cc5a8b4f5749632dd90b35",
+            "src/gif/engine-a.js": "5b0af469c7fcd3833bc810bfbf7b9bdfe3c9e0505fd7baa6a12e7856eb04bf46",
+            "src/gif/engine-b.js": "44dcba64fe2eb5a2122af024d0366cea8b908c3ed4cdfd7085ef162befcc54be",
+            "src/gif/errors.js": "45de0e66cd1b3a69f3f5dd0ea2477e3c06f405f642e80667b0f316f795278879",
+            "src/gif/hybrid.js": "f8e9b99acb49b3243d396f766fcfc23235e59f02f359b5db60a8a898aede5144",
+            "src/gif/inspect.js": "56f7b7878eb2365202a1593f6466ffc35ca37b922738fef496e1cf73a4ad346d",
+            "src/gif/worker.js": "a17b827d608b5c48a6cf29b75a796ce0564020266422a68fa37751928c5ad531",
+            "src/crop/filename.js": "b6d7bf6842db99dce3af91c06544a8d8b59aea9cd25139c9be29ec62b094239b",
+            "src/crop/geometry.js": "5d156e22a4716b36a8d2cde5823eb27f763568639099eceee869d6ab2f01fd6e",
+            "dist/apple-touch-icon.png": "849d5e0574a315dea9bf24fdef7cd47dcdf87f88ba588a6dff1f56e7d907bee6",
+            "dist/favicon.png": "70e2742873f23b2b6b86f5193b6d8e88a3a7afd9e5073c78d59b26791a754e71",
+            "dist/favicon.svg": "440f030ad4a3959276ffb1f9d2c0ad76c10e696fa3d4852759bbaee532466e18",
+            "dist/index.html": "75cfc49e34973130cc42b4c63c1897bedc5947d6e1f687c232c2fd7c130ad38a",
+            "dist/robots.txt": "2845a6792fb1fbe5a89ca154b9b3427fdcd032667641c0b03046654b6685d4b3",
+            "dist/sitemap.xml": "55c8ee6c5888ec047de0c5a3649513b6cffb686dc6d535b0631852a89900920e",
+            "dist/social.png": "ec2c0f766e1b60dddb4ddb3d9cb26571ec9377f42112e770918a67f96a397726",
+            "dist/_headers": "7adfc9d081df47326b338a222a5b2cc931d6dcafd75581391fe36380ca40a1ca",
+            "dist/privacy/index.html": "bc19d52d7218783a94f79cf2f55595579f49d0eb41ec7dd3e35be57f4db2bfe2",
+            "dist/licenses/gifenc-LICENSE.txt": "47bc590c39d8ccccfc544875a9faebf44bafa828ef20315b396b5d0629f0cfd6",
+            "dist/licenses/gifsicle-COPYING.txt": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+            "dist/licenses/gifsicle-wasm-browser-LICENSE.txt": "136a5521fed6464d65ceb2316dfae9c58e72355fe6c7dd7ac161273e51b318c1",
+            "dist/licenses/gifuct-js-LICENSE.txt": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+            "dist/licenses/index.html": "4a14b2ed34b235bc5f4fb3778869fa163dd500c135f71effce2e9856dcd143ad",
+            "dist/licenses/js-binary-schema-parser-LICENSE.txt": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+            "dist/assets/home-JK4Hndam.js": "b624dd82bc0693c93aaf46bde9aa76a4840d9125d6808a589554cc435032decd",
+            "dist/assets/styles-uQmwIfLI.css": "0f002856744be43d01f00fcd0d20c93b0923f8500c22e32eec30fd82427b97bc",
+            "dist/assets/worker-KiqjWQdn.js": "39c2f1b5ae9455ee6e8b8cac28aeec3acf7b62cb5311d33b26b33812e6eaee77",
+            "index.html": "0f05113c5ce7f612ecef1c723468c5772ff27fbbe5b4e704a79ee0597bdf2555",
+            "package.json": "05d1cf1a4b5da1ce0c2b4fc8184dd7fe04153a4aa2e5c1d4565f4a8685cd6653",
+            "package-lock.json": "c98423a2021c5756378c70ca4412cecca39ac8641d30ec4af49784d08d41a311"
+          },
+          "productionStaticPreview": true,
+          "memoryMeasurement": "Process memory peak not measured."
+        }
+      },
+      "publication": {
+        "checks": {
+          "checks": [
+            "/: HTTP 200, canonical, single H1, desktop and 390px no overflow",
+            "/privacy/: HTTP 200, canonical, single H1, desktop and 390px no overflow",
+            "/licenses/: HTTP 200, canonical, single H1, desktop and 390px no overflow",
+            "static files served; privacy navigation and GitHub support entry present"
+          ],
+          "errors": [],
+          "remoteRequests": []
+        },
+        "environment": {
+          "browser": "156.0.4314.58",
+          "date": "2026-11-02T07:17:46.698Z",
+          "platform": "win32",
+          "cpu": "13th Gen Intel(R) Core(TM) i7-13700H",
+          "systemMemoryBytes": 16836689920,
+          "sourceSha256": {
+            "src/config.js": "a0a73a40add90c319ba6c8ce1efb369747ac7ef8c7fcf5efaad586b9982ec32a",
+            "src/main.js": "88e6dfd4c95dbcc482566602ac3a0de8575925e84ab4a279927479d485d79109",
+            "src/styles.css": "1b7ccc598f8edbfd229a74fd1c613985f16414b0cd062f26e3887db1929623bc",
+            "src/gif/child-worker.js": "26b1721af56395f6a0a69e93c89202787f0131d3ee3bc1e28fcb9435f0d2c42a",
+            "src/gif/client.js": "acd0c10e351680478ee984def705574aa9b918bb11cc5a8b4f5749632dd90b35",
+            "src/gif/engine-a.js": "5b0af469c7fcd3833bc810bfbf7b9bdfe3c9e0505fd7baa6a12e7856eb04bf46",
+            "src/gif/engine-b.js": "44dcba64fe2eb5a2122af024d0366cea8b908c3ed4cdfd7085ef162befcc54be",
+            "src/gif/errors.js": "45de0e66cd1b3a69f3f5dd0ea2477e3c06f405f642e80667b0f316f795278879",
+            "src/gif/hybrid.js": "f8e9b99acb49b3243d396f766fcfc23235e59f02f359b5db60a8a898aede5144",
+            "src/gif/inspect.js": "56f7b7878eb2365202a1593f6466ffc35ca37b922738fef496e1cf73a4ad346d",
+            "src/gif/worker.js": "a17b827d608b5c48a6cf29b75a796ce0564020266422a68fa37751928c5ad531",
+            "src/crop/filename.js": "b6d7bf6842db99dce3af91c06544a8d8b59aea9cd25139c9be29ec62b094239b",
+            "src/crop/geometry.js": "5d156e22a4716b36a8d2cde5823eb27f763568639099eceee869d6ab2f01fd6e",
+            "dist/apple-touch-icon.png": "849d5e0574a315dea9bf24fdef7cd47dcdf87f88ba588a6dff1f56e7d907bee6",
+            "dist/favicon.png": "70e2742873f23b2b6b86f5193b6d8e88a3a7afd9e5073c78d59b26791a754e71",
+            "dist/favicon.svg": "440f030ad4a3959276ffb1f9d2c0ad76c10e696fa3d4852759bbaee532466e18",
+            "dist/index.html": "75cfc49e34973130cc42b4c63c1897bedc5947d6e1f687c232c2fd7c130ad38a",
+            "dist/robots.txt": "2845a6792fb1fbe5a89ca154b9b3427fdcd032667641c0b03046654b6685d4b3",
+            "dist/sitemap.xml": "55c8ee6c5888ec047de0c5a3649513b6cffb686dc6d535b0631852a89900920e",
+            "dist/social.png": "ec2c0f766e1b60dddb4ddb3d9cb26571ec9377f42112e770918a67f96a397726",
+            "dist/_headers": "7adfc9d081df47326b338a222a5b2cc931d6dcafd75581391fe36380ca40a1ca",
+            "dist/privacy/index.html": "bc19d52d7218783a94f79cf2f55595579f49d0eb41ec7dd3e35be57f4db2bfe2",
+            "dist/licenses/gifenc-LICENSE.txt": "47bc590c39d8ccccfc544875a9faebf44bafa828ef20315b396b5d0629f0cfd6",
+            "dist/licenses/gifsicle-COPYING.txt": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+            "dist/licenses/gifsicle-wasm-browser-LICENSE.txt": "136a5521fed6464d65ceb2316dfae9c58e72355fe6c7dd7ac161273e51b318c1",
+            "dist/licenses/gifuct-js-LICENSE.txt": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+            "dist/licenses/index.html": "b056c23255e75b4e510199c98c6e9a34e7735be7d3f1b27518a7bcef0257d07b",
+            "dist/licenses/js-binary-schema-parser-LICENSE.txt": "8633cda68d7b47e98e3e563a2833e63792edeecdb24cab02bfb15f25c1b37072",
+            "dist/assets/home-JK4Hndam.js": "b624dd82bc0693c93aaf46bde9aa76a4840d9125d6808a589554cc435032decd",
+            "dist/assets/styles-uQmwIfLI.css": "0f002856744be43d01f00fcd0d20c93b0923f8500c22e32eec30fd82427b97bc",
+            "dist/assets/worker-KiqjWQdn.js": "39c2f1b5ae9455ee6e8b8cac28aeec3acf7b62cb5311d33b26b33812e6eaee77",
+            "index.html": "0f05113c5ce7f612ecef1c723468c5772ff27fbbe5b4e704a79ee0597bdf2555",
+            "package.json": "05d1cf1a4b5da1ce0c2b4fc8184dd7fe04153a4aa2e5c1d4565f4a8685cd6653",
+            "package-lock.json": "c98423a2021c5756378c70ca4412cecca39ac8641d30ec4af49784d08d41a311"
+          },
+          "productionStaticPreview": true,
+          "memoryMeasurement": "Process memory peak not measured."
+        }
+      }
+    }
+  }
+}
