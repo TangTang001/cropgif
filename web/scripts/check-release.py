@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 import hashlib
 import json
 import struct
+from zipfile import ZipFile
 import xml.etree.ElementTree as ET
 
 root = Path(__file__).resolve().parents[1]
@@ -49,16 +50,33 @@ for url, name in pages.items():
 
 locs = [x.text for x in ET.parse(dist / 'sitemap.xml').findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
 assert set(locs) == {origin + url for url in pages} and len(locs) == len(pages)
+not_found = Page()
+not_found.feed((dist / '404.html').read_text(encoding='utf-8'))
+assert not_found.noindex and not_found.h1 == 1 and not not_found.canonical, '404.html'
+assert '/' in not_found.refs, '404 must link home'
+for ref in not_found.refs:
+    assert ref.startswith('/') and target(ref).is_file(), ('404.html', ref)
 assert 'Sitemap: ' + origin + '/sitemap.xml' in (dist / 'robots.txt').read_text()
 for name, size in [('social.png', (1200, 630)), ('apple-touch-icon.png', (180, 180)), ('favicon.png', (32, 32))]:
     data = (dist / name).read_bytes()
     assert data[:8] == b'\x89PNG\r\n\x1a\n' and struct.unpack('>II', data[16:24]) == size
 
-notices = sorted((root / 'licenses').glob('*-LICENSE.txt')) + [root / 'licenses/gifsicle-COPYING.txt']
+notices = sorted((root / 'public/licenses').glob('*.txt'))
+assert len(notices) == 5, 'third-party notice count'
 for source in notices:
     assert source.read_bytes() == (dist / 'licenses' / source.name).read_bytes(), source.name
 files = sorted(str(p.relative_to(dist)).replace('\\', '/') for p in dist.rglob('*') if p.is_file())
-expected = set(pages.values()) | {'robots.txt', 'sitemap.xml', '_headers', 'favicon.svg', 'favicon.png', 'apple-touch-icon.png', 'social.png'} | {'licenses/' + p.name for p in notices}
+source_files = {'source/gifsicle-1.92-source.zip', 'source/README.txt', 'source/provenance.json'}
+provenance = json.loads((dist / 'source/provenance.json').read_text(encoding='utf-8'))
+archive_path = dist / 'source/gifsicle-1.92-source.zip'
+assert hashlib.sha256(archive_path.read_bytes()).hexdigest() == provenance['archive']['sha256']
+with ZipFile(archive_path) as archive:
+    assert archive.testzip() is None
+    for required in ['gifsicle-1.92/src/gifsicle.c', 'gifsicle-1.92/COPYING', 'wasm-codecs/packages/gifsicle/Dockerfile', 'wasm-codecs/packages/gifsicle/build.sh', 'wasm-codecs/packages/gifsicle/src/pre.ts', 'wasm-codecs/packages/gifsicle/lib/pre.js', 'gifsicle-wasm-browser/src/build.js', 'gifsicle-wasm-browser/LICENSE']:
+        assert required in archive.namelist(), required
+    wasm = archive.read('gifsicle-wasm-browser/src/gifsicle.wasm')
+    assert hashlib.sha256(wasm).hexdigest() == provenance['core']['wasmSha256']
+expected = set(pages.values()) | {'404.html', 'robots.txt', 'sitemap.xml', '_headers', 'favicon.svg', 'favicon.png', 'apple-touch-icon.png', 'social.png'} | {'licenses/' + p.name for p in notices} | source_files
 assert {p for p in files if not p.startswith('assets/')} == expected
 assert all(Path(p).suffix in {'.js', '.css'} for p in files if p.startswith('assets/'))
-print(json.dumps({'pages': list(pages), 'files': files, 'checks': 'canonical, H1, description, internal targets, sitemap, icons, original license bytes, publication file allowlist', 'sha256': {name: hashlib.sha256((dist / name).read_bytes()).hexdigest() for name in files}}, indent=2))
+print(json.dumps({'pages': list(pages), 'files': files, 'checks': 'canonical, H1, description, internal targets, sitemap, 404 noindex and home link, icons, original license bytes, publication file allowlist', 'sha256': {name: hashlib.sha256((dist / name).read_bytes()).hexdigest() for name in files}}, indent=2))

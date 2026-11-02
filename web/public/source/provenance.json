@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-02",
+  "wrapper": {
+    "name": "gifsicle-wasm-browser",
+    "version": "1.5.19",
+    "commit": "7033183ee0db22bb339a878571d743b9642e1c77",
+    "bundleSha256": "c2b9ef1acd3ca20a0795fec66496a24ec6001f53836113c0255bd4464662a9cd"
+  },
+  "core": {
+    "version": "1.92",
+    "commit": "1e2ca7401692ba94d7405de6e9dd1d1e73ca880f",
+    "wasmBytes": 217106,
+    "wasmSha256": "b4d9f84e5f8aa7cbe7cc2f90431b511456593324cb4aa75fcabf4ada8c218e05"
+  },
+  "buildSource": {
+    "repository": "cyrilwanner/wasm-codecs",
+    "commit": "89fb54b412e262832d61d9da5b4deb02ead184d4",
+    "package": "@wasm-codecs/gifsicle@1.0.0",
+    "packageSha256": "d326c8731f54a06d7e7434bfec9241c8ddff9e6064804d96c1b7facd0a024122",
+    "npmIntegrityVerified": true
+  },
+  "verification": [
+    "Installed embedded WASM equals pinned wrapper repository WASM",
+    "Installed embedded WASM equals published @wasm-codecs/gifsicle 1.0.0 WASM",
+    "Upstream Dockerfile downloads Gifsicle v1.92; source snapshot pinned to that tag commit"
+  ],
+  "limitation": "Historical toolchain not rebuilt; no bit-for-bit build reproduction claimed.",
+  "archive": {
+    "file": "gifsicle-1.92-source.zip",
+    "bytes": 643897,
+    "sha256": "02c9393653c4c9280050452fef8d0467976697009af3f0eb184d3fbdb80e2b69"
+  }
+}

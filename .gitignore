@@ -1,4 +1,4 @@
-# Dependencies, builds, caches and local toolchains
+# Generated dependencies and output
 **/node_modules/
 **/dist/
 **/.vite/
@@ -7,33 +7,23 @@
 **/.dependency-install-incomplete-*/
 *.py[cod]
 *.log
-/test-resources/crop-benchmark/tools/
-/test-resources/crop-benchmark/vendor/
 
-# Keep compact acceptance summaries; regenerate bulky run outputs locally.
-/test-resources/crop-benchmark/runs/**
-!/test-resources/crop-benchmark/runs/*summary.json
-!/test-resources/crop-benchmark/runs/stage1-final-chrome/
-!/test-resources/crop-benchmark/runs/stage1-final-edge/
-!/test-resources/crop-benchmark/runs/stage1-safety-owned-workers/
-/test-resources/crop-benchmark/runs/stage1-final-chrome/*
-/test-resources/crop-benchmark/runs/stage1-final-edge/*
-/test-resources/crop-benchmark/runs/stage1-safety-owned-workers/*
-!/test-resources/crop-benchmark/runs/stage1-final-chrome/*.json
-!/test-resources/crop-benchmark/runs/stage1-final-edge/*.json
-!/test-resources/crop-benchmark/runs/stage1-safety-owned-workers/checks.json
-!/test-resources/crop-benchmark/runs/stage1-safety-owned-workers/unit-tests.tap
-!/test-resources/crop-benchmark/runs/stage2-touch-probe2-chrome/
-!/test-resources/crop-benchmark/runs/stage2-touch-probe2-edge/
-!/test-resources/crop-benchmark/runs/stage2-safety/
-/test-resources/crop-benchmark/runs/stage2-touch-probe2-chrome/*
-/test-resources/crop-benchmark/runs/stage2-touch-probe2-edge/*
-/test-resources/crop-benchmark/runs/stage2-safety/*
-!/test-resources/crop-benchmark/runs/stage2-touch-probe2-chrome/checks.json
-!/test-resources/crop-benchmark/runs/stage2-touch-probe2-edge/checks.json
-!/test-resources/crop-benchmark/runs/stage2-safety/checks.json
+# Development material retained locally
+/design-v1/
+/test-resources/
+/ui-references/
+/*.md
+!/README.md
+/web/*.md
+!/web/README.md
+/web/tests/
+/web/dependency-evidence.json
+/web/scripts/generate-social.py
+/web/licenses/*.md
+/web/licenses/*-LICENSE.txt
+/web/licenses/gifsicle-COPYING.txt
 
-# Local credentials and operating system files
+# Credentials and OS files
 .env
 .env.*
 !.env.example
