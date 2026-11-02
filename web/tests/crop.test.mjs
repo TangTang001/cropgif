@@ -1,6 +1,14 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { imagePoint, move, resize, squareRect, dimensions } from '../src/crop/geometry.js';
+import { cropFilename } from '../src/crop/filename.js';
+test('download names have safe characters, bounded length and actual crop dimensions', () => {
+  assert.equal(cropFilename('beach.GIF', 120, 80), 'beach-crop-120x80.gif');
+  assert.equal(cropFilename('CON.gif', 1, 1), 'gif-CON-crop-1x1.gif');
+  assert.equal(cropFilename('my/clip?.gif', 2, 3), 'my_clip_-crop-2x3.gif');
+  assert.equal(cropFilename('.gif', 2, 3), 'animation-crop-2x3.gif');
+  assert.ok(cropFilename('a'.repeat(200)+'.gif', 1, 1).length < 100);
+});
 const image = { width: 800, height: 500 };
 test('coordinate scaling and rounding account for fractional display and scroll', () => {
   assert.deepEqual(imagePoint(221.25,160,{left:21.25,top:-40,width:400,height:250},image), {x:400,y:400});

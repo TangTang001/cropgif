@@ -3,19 +3,23 @@ import { GifClient, readGIFFile } from './gif/client.js';
 import { inspectGIF } from './gif/inspect.js';
 import { GifError, normalizeError } from './gif/errors.js';
 import { imagePoint, move, resize, squareRect, dimensions } from './crop/geometry.js';
+import { cropFilename } from './crop/filename.js';
 
 const $ = id => document.getElementById(id);
 const client = new GifClient();
-let buffer, meta, selection, sourceURL, resultURL, drag;
+let buffer, meta, selection, sourceURL, resultURL, drag, sourceName;
+let taskId = 0;
 let square = false, busy = false;
 const size = n => n < 1048576 ? `${(n / 1024).toFixed(0)} KB` : `${(n / 1048576).toFixed(2)} MB`;
 function message(text, error = false) {
+  $('status').setAttribute('role', error ? 'alert' : 'status');
   $('status').textContent = text; $('status').classList.toggle('error', error);
 }
 function clearResult() {
   if (resultURL) URL.revokeObjectURL(resultURL);
   resultURL = undefined;
   $('result').removeAttribute('src'); $('download').removeAttribute('href');
+  $('download').removeAttribute('download');
   $('result-filled').hidden = true; $('result-empty').hidden = false;
   $('result-label').textContent = 'Adjust the frame, then click Crop GIF.';
 }
@@ -33,8 +37,10 @@ function controls() {
   $('selection').setAttribute('aria-disabled', busy || !buffer);
   $('editor').setAttribute('aria-busy', busy);
 }
-function processing(value) {
-  busy = value; controls(); $('crop').querySelector('span').textContent = value ? 'Please wait…' : 'Crop GIF';
+function setState(state) {
+  $('editor').dataset.state = state;
+  busy = state === 'loading' || state === 'processing';
+  controls(); $('crop').querySelector('span').textContent = busy ? 'Please wait…' : 'Crop GIF';
 }
 function fitImage() {
   if (!meta) return;
@@ -62,40 +68,46 @@ function render(syncInputs = true) {
     $(id).classList.toggle('active', active); $(id).setAttribute('aria-pressed', active);
   }
 }
-function update(rect) { selection = rect; clearResult(); render(); controls(); message('Ready to crop.'); }
+function update(rect) { selection = rect; clearResult(); render(); setState('ready'); message('Ready to crop.'); }
 $('choose').onclick = () => $('file').click();
 $('choose-again').onclick = () => { $('file-dialog').close(); $('file').click(); };
 $('file').onchange = async () => {
   const file = $('file').files[0]; if (!file || busy) return;
+  const id = ++taskId;
   $('file-dialog').close(); $('file-error').textContent = '';
-  clearResult(); buffer = meta = selection = undefined; drag = undefined;
+  clearResult(); buffer = meta = selection = sourceName = undefined; drag = undefined;
   if (sourceURL) URL.revokeObjectURL(sourceURL);
   sourceURL = undefined; $('original').removeAttribute('src');
   $('image-wrap').hidden = true; $('upload-prompt').hidden = false;
   $('filename').textContent = 'No GIF selected'; $('file-summary').textContent = '';
   $('dimension-error').textContent = ''; $('width').value = $('height').value = '';
-  processing(true); message('Opening your GIF…');
+  setState('loading'); message('Opening your GIF…');
   try {
     const bytes = await readGIFFile(file);
+    if (id !== taskId) return;
     // Classify even short non-GIF files before the full container scan.
     const signature = String.fromCharCode(...new Uint8Array(bytes).subarray(0, 6));
     if (!['GIF87a', 'GIF89a'].includes(signature)) throw new GifError('INVALID_GIF');
     const found = inspectGIF(bytes);
     sourceURL = URL.createObjectURL(new Blob([bytes], { type: 'image/gif' }));
     $('original').src = sourceURL; await $('original').decode();
+    if (id !== taskId) return;
     buffer = bytes; meta = found; square = false;
+    sourceName = file.name;
     $('filename').textContent = file.name;
     $('image-wrap').hidden = false; $('upload-prompt').hidden = true;
     $('file-summary').textContent = `${meta.width} × ${meta.height} · ${meta.frames.length} frames · ${size(bytes.byteLength)}`;
     update({ x: 0, y: 0, width: meta.width, height: meta.height }); fitImage();
   } catch (error) {
+    if (id !== taskId) return;
     if (sourceURL) URL.revokeObjectURL(sourceURL);
     sourceURL = undefined; $('original').removeAttribute('src');
     const failure = normalizeError(error);
     const text = failure.code === 'INVALID_GIF' ? 'Only GIF files are supported. Please choose a GIF file.' : failure.message;
     $('file-error').textContent = text; message(text, true);
+    setState('error');
     if (failure.code === 'INVALID_GIF') $('file-dialog').showModal();
-  } finally { processing(false); $('file').value = ''; }
+  } finally { if (id === taskId) { controls(); $('file').value = ''; } }
 };
 for (const id of ['width', 'height']) {
   $(id).oninput = () => {
@@ -112,7 +124,8 @@ for (const id of ['width', 'height']) {
       selection = dimensions(selection, $('width').valueAsNumber, $('height').valueAsNumber, meta);
       render(false); message('Ready to crop.');
     }
-    controls();
+    if (!valid) message('Enter valid crop dimensions before cropping.', true);
+    setState(valid ? 'ready' : 'error');
   };
   $(id).onkeydown = event => { if (event.key === 'Escape') { update({ ...selection }); event.preventDefault(); } };
 }
@@ -154,17 +167,28 @@ $('selection').onkeydown = event => {
 };
 $('crop').onclick = async () => {
   if (busy || !buffer || !validDimensions()) return;
-  endDrag(); clearResult(); processing(true); message('Cropping GIF. Please wait…');
+  const id = ++taskId;
+  endDrag(); clearResult(); setState('processing'); message('Cropping GIF. Please wait…');
   try {
     const result = await client.run(buffer, { ...selection });
+    if (id !== taskId) return;
     resultURL = URL.createObjectURL(new Blob([result.bytes], { type: 'image/gif' }));
     $('result').src = resultURL; $('download').href = resultURL;
+    $('download').download = cropFilename(sourceName, result.meta.width, result.meta.height);
     $('result-info').textContent = `${result.meta.width} × ${result.meta.height} px · ${result.meta.frames.length} frames · ${size(result.bytes.length)}`;
     $('result-filled').hidden = false; $('result-empty').hidden = true;
-    $('result-label').textContent = 'Crop complete. Ready to download.'; message('Your cropped GIF is ready below.');
-  } catch (error) { message(normalizeError(error).message, true); }
-  finally { processing(false); }
+    $('result-label').textContent = 'Crop complete. Ready to download.';
+    setState('success'); message('Your cropped GIF is ready below.');
+  } catch (error) { if (id === taskId) { clearResult(); setState('error'); message(normalizeError(error).message, true); } }
+  finally { if (id === taskId) controls(); }
 };
 const observer = new ResizeObserver(() => { endDrag(); fitImage(); }); observer.observe($('stage'));
-addEventListener('pagehide', () => { endDrag(); client.close(); clearResult(); if (sourceURL) URL.revokeObjectURL(sourceURL); });
-controls();
+addEventListener('pagehide', () => { ++taskId; endDrag(); client.close(); clearResult(); if (sourceURL) URL.revokeObjectURL(sourceURL); sourceURL = undefined; });
+addEventListener('pageshow', event => {
+  if (!event.persisted) return;
+  if (buffer) {
+    sourceURL = URL.createObjectURL(new Blob([buffer], { type: 'image/gif' }));
+    $('original').src = sourceURL; setState('ready'); message('Ready to crop.');
+  } else { setState('empty'); message('Choose a local GIF to begin.'); }
+});
+setState('empty');
