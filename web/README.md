@@ -1,6 +1,6 @@
 # GIF Crop 正式工程
 
-当前交付：第一版开发计划阶段 1–3。正式页面沿用蓝色原型，首次进入选择本地 GIF；默认全图自由选区，支持移动、八个边角手柄、宽高输入、正方形及键盘操作。任务状态、当前结果下载、文件名清理与错误后恢复已接入。
+当前交付：第一版开发计划阶段 1–4。正式页面沿用蓝色原型，首次进入选择本地 GIF；默认全图自由选区，支持移动、八个边角手柄、宽高输入、正方形及键盘操作。任务状态、当前结果下载、文件名清理与错误后恢复已接入，并完成本机桌面验收。
 
 ```powershell
 Set-Location F:\SEO\gifcrop_project\web
@@ -41,4 +41,17 @@ Playwright 使用当前 Codex 本机运行库；可通过 PLAYWRIGHT_MODULE 指�
 
 阶段 2 交互测试使用生产构建的静态预览，包含实际下载、逐帧画面及原始动画元数据验证。大体积下载及截图在本机 runs 中保留，Git 只保留阶段验收摘要和检查记录；重建这些输出需重新运行测试。
 
-详情与未测项见 阶段1验收报告.md、阶段2验收报告.md。完整错误流程、容量和真机验收按后续阶段继续；许可证及底层 WASM 来源待确认项见 licenses/README.md。
+完整流程和最终桌面验收分别见 [阶段3验收报告](阶段3验收报告.md)、[验收报告](验收报告.md)；历史基线见阶段 1、2 报告。真机 Android/iOS、Safari/Firefox 和浏览器进程内存峰值未验收。许可证及底层 WASM 来源待确认项见 licenses/README.md；SEO 和发布准备属于阶段 5。
+
+```powershell
+# 先构建；每组 label 必须不存在
+node tests/run-flow.mjs --label=my-flow
+node tests/run-flow.mjs --label=my-flow --edge
+node tests/run-page-regression.mjs --label=my-page
+node tests/run-page-regression.mjs --label=my-page --edge
+# 性能测量单独串行运行，避免其他回归同时占用资源
+node tests/run-capacity.mjs --label=my-capacity
+node tests/run-capacity.mjs --label=my-capacity --edge
+```
+
+完整页面回归使用默认防护配置，通过生产静态页面实际载入、Crop、浏览器下载；149 个输出 SHA256 与已保存的阶段 1 哈希表对照，无需把大体积历史输出纳入 Git。独立浏览器逐帧及原始元数据验证仍使用实验工程的 verify-browser.mjs 和 verify.py。容量边界测试的稀疏画布、注释填充文件用于隔离限制机制，不能推断任意同等大小动画或手机均可稳定处理。

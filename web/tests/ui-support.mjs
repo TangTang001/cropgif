@@ -35,7 +35,12 @@ export async function startRun(label, edge) {
         super(controlledURL || url, options);
         if (controlledURL) revoke(controlledURL);
         evidence.created++; evidence.live.add(this);
-        this.addEventListener('message', ({ data }) => { if (main && !data.child) evidence.last = data; });
+        this.addEventListener('message', ({ data }) => {
+          if (main && !data.child) {
+            evidence.last = data; evidence.completed = performance.now();
+            evidence.completedTicks = evidence.ticks; evidence.completedMaxGap = evidence.maxGap;
+          }
+        });
       }
       postMessage(data, ...rest) {
         if (data.buffer && data.rect) { evidence.last = null; evidence.requestRect = data.rect; evidence.started = performance.now(); evidence.ticks = 0; evidence.maxGap = 0; }
@@ -89,9 +94,9 @@ export async function cropAndRead(page) {
     return { state: document.getElementById('editor').dataset.state, message: document.getElementById('status').textContent,
       base64: downloaded ? encode(downloaded) : null, matchesWorker: downloaded ? encode(last.bytes) === encode(downloaded) : null,
       requestRect: e.requestRect, details: last?.details, errorCode: last?.error?.code, failureDetails: last?.error?.details,
-      outputMeta: last?.meta, processingMs: last?.processingMs, firstRoundtripMs: performance.now() - e.started,
+      outputMeta: last?.meta, processingMs: last?.processingMs, firstRoundtripMs: e.completed - e.started,
       outputBytes: downloaded?.length, filename: document.getElementById('download').getAttribute('download'),
-      liveWorkers: e.live.size, created: e.created, terminated: e.terminated, activePageURLs: e.urls.size, animationTicks: e.ticks, maxAnimationGapMs: e.maxGap };
+      liveWorkers: e.live.size, created: e.created, terminated: e.terminated, activePageURLs: e.urls.size, animationTicks: e.completedTicks, maxAnimationGapMs: e.completedMaxGap };
   });
 }
 export async function actualDownload(page, out, filename, expected) {
