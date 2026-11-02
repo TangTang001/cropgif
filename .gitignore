@@ -23,6 +23,15 @@
 !/test-resources/crop-benchmark/runs/stage1-final-edge/*.json
 !/test-resources/crop-benchmark/runs/stage1-safety-owned-workers/checks.json
 !/test-resources/crop-benchmark/runs/stage1-safety-owned-workers/unit-tests.tap
+!/test-resources/crop-benchmark/runs/stage2-touch-probe2-chrome/
+!/test-resources/crop-benchmark/runs/stage2-touch-probe2-edge/
+!/test-resources/crop-benchmark/runs/stage2-safety/
+/test-resources/crop-benchmark/runs/stage2-touch-probe2-chrome/*
+/test-resources/crop-benchmark/runs/stage2-touch-probe2-edge/*
+/test-resources/crop-benchmark/runs/stage2-safety/*
+!/test-resources/crop-benchmark/runs/stage2-touch-probe2-chrome/checks.json
+!/test-resources/crop-benchmark/runs/stage2-touch-probe2-edge/checks.json
+!/test-resources/crop-benchmark/runs/stage2-safety/checks.json
 
 # Local credentials and operating system files
 .env

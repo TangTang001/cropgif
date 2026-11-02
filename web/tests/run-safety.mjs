@@ -5,7 +5,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createServer, preview } from 'vite';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const out = resolve(root, '../test-resources/crop-benchmark/runs/stage1-safety-owned-workers');
+const label = process.argv.find(a => a.startsWith('--label='))?.slice(8) || 'stage1-safety-owned-workers';
+if (!/^[a-z0-9-]+$/.test(label)) throw new Error('Invalid output label.');
+const out = resolve(root, '../test-resources/crop-benchmark/runs', label);
 await mkdir(out); // Do not overwrite previous evidence.
 const { chromium } = await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE || 'C:/Users/itang/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs'));
 const server = await createServer({ root, configFile: resolve(root, 'vite.config.js'), server: { host: '127.0.0.1', port: 4191, strictPort: true } });
@@ -99,18 +101,18 @@ try {
   await productionPage.locator('#file').setInputFiles(validFile);
   await productionPage.waitForFunction(() => !document.getElementById('crop').disabled);
   await productionPage.locator('#crop').click();
-  await productionPage.waitForFunction(() => !document.getElementById('download').hidden);
+  await productionPage.waitForFunction(() => !document.getElementById('result-filled').hidden);
   const downloadEvent = productionPage.waitForEvent('download');
   await productionPage.locator('#download').click();
   const download = await downloadEvent;
   await download.saveAs(resolve(out, 'production-download.gif'));
   assert.deepEqual(remoteRequests, []);
   await productionPage.locator('#file').setInputFiles(resolve(root, '../test-resources/codec-corpus/invalid/empty.gif'));
-  await productionPage.waitForFunction(() => document.getElementById('download').hidden && document.getElementById('crop').disabled);
+  await productionPage.waitForFunction(() => document.getElementById('result-filled').hidden && document.getElementById('crop').disabled);
   await productionPage.locator('#file').setInputFiles(validFile);
   await productionPage.waitForFunction(() => !document.getElementById('crop').disabled);
   await productionPage.locator('#crop').click();
-  await productionPage.waitForFunction(() => !document.getElementById('download').hidden);
+  await productionPage.waitForFunction(() => !document.getElementById('result-filled').hidden);
   results.productionPreview = { actualDownload: true, invalidFileClearsOldResult: true, recovery: true, remoteRequests };
   results.browser = browser.version();
   await writeFile(resolve(out, 'checks.json'), JSON.stringify(results, null, 2), { flag: 'wx' });
