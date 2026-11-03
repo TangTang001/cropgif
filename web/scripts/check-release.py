@@ -49,7 +49,7 @@ for url, name in pages.items():
         assert target(parsed.path).is_file(), (name, ref)
 
 locs = [x.text for x in ET.parse(dist / 'sitemap.xml').findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
-assert set(locs) == {origin + url for url in pages} and len(locs) == len(pages)
+assert sorted(locs) == [origin + '/', origin + '/privacy/']
 not_found = Page()
 not_found.feed((dist / '404.html').read_text(encoding='utf-8'))
 assert not_found.noindex and not_found.h1 == 1 and not not_found.canonical, '404.html'
