@@ -40,7 +40,7 @@ for url, name in pages.items():
     page.feed((dist / name).read_text(encoding='utf-8'))
     assert page.canonical == [origin + url], (name, page.canonical)
     assert page.h1 == 1 and len(page.description) == 1 and page.description[0], name
-    assert not page.noindex, name
+    assert page.noindex == (url == '/licenses/'), name
     for ref in page.refs:
         parsed = urlparse(ref)
         if parsed.scheme and parsed.netloc != 'gifcroplab.com': continue
