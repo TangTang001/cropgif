@@ -6,6 +6,11 @@ import { imagePoint, move, resize, squareRect, dimensions } from './crop/geometr
 import { cropFilename } from './crop/filename.js';
 
 const $ = id => document.getElementById(id);
+const exampleButtons = document.querySelectorAll('[data-example]');
+const examples = {
+  square: { name: 'gif-crop-before.gif', square: true },
+  freeform: { name: 'gif-freeform-before.gif', rect: { x: 104, y: 0, width: 216, height: 180 } },
+};
 const client = new GifClient();
 let buffer, meta, selection, sourceURL, resultURL, drag, sourceName;
 let taskId = 0;
@@ -32,6 +37,7 @@ function validDimensions() {
 }
 function controls() {
   $('choose').disabled = $('file').disabled = busy;
+  for (const button of exampleButtons) button.disabled = busy;
   for (const id of ['width', 'height', 'reset', 'free', 'square']) $(id).disabled = busy || !buffer;
   $('crop').disabled = busy || !buffer || !validDimensions();
   $('selection').setAttribute('aria-disabled', busy || !buffer);
@@ -54,8 +60,12 @@ function fitImage() {
 function render(syncInputs = true) {
   if (!selection) return;
   const r = selection;
-  Object.assign($('selection').style, { left: `${r.x / meta.width * 100}%`, top: `${r.y / meta.height * 100}%`, width: `${r.width / meta.width * 100}%`, height: `${r.height / meta.height * 100}%` });
-  const bounds = $('image-wrap').getBoundingClientRect();
+  const image = $('image-wrap');
+  image.style.setProperty('--crop-left', `${r.x / meta.width * 100}%`);
+  image.style.setProperty('--crop-top', `${r.y / meta.height * 100}%`);
+  image.style.setProperty('--crop-width', `${r.width / meta.width * 100}%`);
+  image.style.setProperty('--crop-height', `${r.height / meta.height * 100}%`);
+  const bounds = image.getBoundingClientRect();
   $('selection').classList.toggle('compact', r.width / meta.width * bounds.width < 90 || r.height / meta.height * bounds.height < 44);
   $('selection-tag').textContent = `${r.width} × ${r.height}`;
   $('selection').setAttribute('aria-label', `Crop selection, ${r.width} by ${r.height} pixels. Use arrow keys to move.`);
@@ -71,8 +81,23 @@ function render(syncInputs = true) {
 function update(rect) { selection = rect; clearResult(); render(); setState('ready'); message('Ready to crop.'); }
 $('choose').onclick = () => $('file').click();
 $('choose-again').onclick = () => { $('file-dialog').close(); $('file').click(); };
-$('file').onchange = async () => {
-  const file = $('file').files[0]; if (!file || busy) return;
+$('file').onchange = () => {
+  const file = $('file').files[0];
+  if (file) openGIF(file.name, () => readGIFFile(file));
+};
+for (const button of exampleButtons) {
+  button.onclick = () => {
+    const example = examples[button.dataset.example];
+    $('editor').scrollIntoView();
+    openGIF(example.name, async () => {
+      const response = await fetch(`/examples/${example.name}`);
+      if (!response.ok) throw new Error('Example unavailable');
+      return response.arrayBuffer();
+    }, example);
+  };
+}
+async function openGIF(name, readBytes, example) {
+  if (busy) return;
   const id = ++taskId;
   $('file-dialog').close(); $('file-error').textContent = '';
   clearResult(); buffer = meta = selection = sourceName = undefined; drag = undefined;
@@ -83,7 +108,7 @@ $('file').onchange = async () => {
   $('dimension-error').textContent = ''; $('width').value = $('height').value = '';
   setState('loading'); message('Opening your GIF…');
   try {
-    const bytes = await readGIFFile(file);
+    const bytes = await readBytes();
     if (id !== taskId) return;
     // Classify even short non-GIF files before the full container scan.
     const signature = String.fromCharCode(...new Uint8Array(bytes).subarray(0, 6));
@@ -92,23 +117,26 @@ $('file').onchange = async () => {
     sourceURL = URL.createObjectURL(new Blob([bytes], { type: 'image/gif' }));
     $('original').src = sourceURL; await $('original').decode();
     if (id !== taskId) return;
-    buffer = bytes; meta = found; square = false;
-    sourceName = file.name;
-    $('filename').textContent = file.name;
+    buffer = bytes; meta = found; square = example?.square ?? false;
+    sourceName = name;
+    $('filename').textContent = name;
     $('image-wrap').hidden = false; $('upload-prompt').hidden = true;
     $('file-summary').textContent = `${meta.width} × ${meta.height} · ${meta.frames.length} frames · ${size(bytes.byteLength)}`;
-    update({ x: 0, y: 0, width: meta.width, height: meta.height }); fitImage();
+    const full = { x: 0, y: 0, width: meta.width, height: meta.height };
+    update(square ? squareRect(full) : example?.rect ?? full); fitImage();
+    if (example) $('crop').focus({ preventScroll: true });
   } catch (error) {
     if (id !== taskId) return;
     if (sourceURL) URL.revokeObjectURL(sourceURL);
     sourceURL = undefined; $('original').removeAttribute('src');
     const failure = normalizeError(error);
-    const text = failure.code === 'INVALID_GIF' ? 'Only GIF files are supported. Please choose a GIF file.' : failure.message;
+    const text = example ? 'Could not open the example GIF. Try again or choose a local GIF.'
+      : failure.code === 'INVALID_GIF' ? 'Only GIF files are supported. Please choose a GIF file.' : failure.message;
     $('file-error').textContent = text; message(text, true);
     setState('error');
-    if (failure.code === 'INVALID_GIF') $('file-dialog').showModal();
+    if (!example && failure.code === 'INVALID_GIF') $('file-dialog').showModal();
   } finally { if (id === taskId) { controls(); $('file').value = ''; } }
-};
+}
 for (const id of ['width', 'height']) {
   $(id).oninput = () => {
     clearResult(); const n = $(id).valueAsNumber;

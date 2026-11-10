@@ -52,10 +52,67 @@
       </aside>
     </div>
   </section>
-  <section class="result-section" id="result-section" aria-label="Cropped GIF result">
-    <div class="section-heading"><div class="workspace-title"><span class="step-number">02</span><h2>Cropped GIF</h2></div><span id="result-label">Adjust the frame, then click Crop GIF.</span></div>
+  <section class="workspace result-section" id="result-section" aria-label="Cropped GIF result">
+    <div class="workspace-top"><div class="workspace-title"><span class="step-number">02</span><h2>Cropped GIF</h2></div><span id="result-label">Adjust the frame, then click Crop GIF.</span></div>
     <div class="result-empty" id="result-empty"><span class="result-placeholder"><svg><use href="#i-crop"/></svg></span><div><h3>No cropped GIF yet</h3><p>Click Crop GIF to preview and download the result.</p></div></div>
     <div class="result-filled" id="result-filled" hidden><div class="result-image"><img id="result" alt="Cropped animated GIF"></div><div class="result-details"><span class="success-label"><svg><use href="#i-check"/></svg> Crop complete</span><h3>Your GIF is ready</h3><p id="result-info"></p><a id="download" class="button primary" download="cropped.gif"><svg><use href="#i-download"/></svg> Download GIF</a><p class="result-helper">To change the result, adjust the crop area above.</p></div></div>
+    <section class="crop-example" aria-labelledby="example-title">
+      <h2 id="example-title">GIF crop examples</h2>
+      <div class="example-list">
+        <article class="example-card" aria-labelledby="square-example-title">
+          <div class="example-heading">
+            <div>
+              <h3 id="square-example-title">Square crop</h3>
+              <p>Trim both sides to make a 1:1 GIF.</p>
+            </div>
+            <button class="button example-button" data-example="square" type="button">Try square crop</button>
+          </div>
+          <div class="example-grid">
+            <figure>
+              <figcaption><strong>Before</strong><span>320 × 180 px</span></figcaption>
+              <picture>
+                <source media="(prefers-reduced-motion: reduce)" srcset="/examples/gif-crop-before.png">
+                <img src="/examples/gif-crop-before.gif" width="320" height="180" loading="lazy" alt="Blue paper plane flying with clouds on both sides">
+              </picture>
+            </figure>
+            <svg class="example-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+            <figure>
+              <figcaption><strong>After</strong><span>180 × 180 px</span></figcaption>
+              <picture>
+                <source media="(prefers-reduced-motion: reduce)" srcset="/examples/gif-crop-after.png">
+                <img src="/examples/gif-crop-after.gif" width="180" height="180" loading="lazy" alt="The same paper plane in a square crop with the outer clouds removed">
+              </picture>
+            </figure>
+          </div>
+        </article>
+        <article class="example-card" aria-labelledby="freeform-example-title">
+          <div class="example-heading">
+            <div>
+              <h3 id="freeform-example-title">Freeform crop</h3>
+              <p>Trim the left side and keep the full orbit.</p>
+            </div>
+            <button class="button example-button" data-example="freeform" type="button">Try freeform crop</button>
+          </div>
+          <div class="example-grid">
+            <figure>
+              <figcaption><strong>Before</strong><span>320 × 180 px</span></figcaption>
+              <picture>
+                <source media="(prefers-reduced-motion: reduce)" srcset="/examples/gif-freeform-before.png">
+                <img src="/examples/gif-freeform-before.gif" width="320" height="180" loading="lazy" alt="A blue moon orbits a planet on the right of a wide frame">
+              </picture>
+            </figure>
+            <svg class="example-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+            <figure>
+              <figcaption><strong>After</strong><span>216 × 180 px</span></figcaption>
+              <picture>
+                <source media="(prefers-reduced-motion: reduce)" srcset="/examples/gif-freeform-after.png">
+                <img src="/examples/gif-freeform-after.gif" width="216" height="180" loading="lazy" alt="The same orbit centered in a tighter crop with the left side removed">
+              </picture>
+            </figure>
+          </div>
+        </article>
+      </div>
+    </section>
   </section>
   <section id="how-it-works" class="how-section"><div class="how-intro"><h2>How to crop a GIF</h2></div><ol class="steps"><li><span>01</span><div><h3>Select a GIF</h3><p>Choose a local file.<br>It stays on your device.</p></div></li><li><span>02</span><div><h3>Adjust the crop area</h3><p>Move or resize the frame.<br>Enter dimensions or select Square.</p></div></li><li><span>03</span><div><h3>Crop and download</h3><p>Click Crop GIF, preview the result,<br>and download your animation.</p></div></li></ol></section>
   <section id="questions" class="faq-section"><div><h2>Frequently asked questions</h2></div><div class="faq-items"><details><summary>Does my GIF leave my device?</summary><p>No. This tool processes GIFs in your browser. Your image is not sent to a server.</p></details><details><summary>Will the animation keep playing?</summary><p>Accepted results retain the frame count, frame delays, and loop information. If we cannot keep the colors or animation information, the crop is declined.</p></details><details><summary>What if a GIF cannot be cropped?</summary><p>Some GIFs use frame structures this version cannot preserve for a particular crop. Try a different crop area or another file.</p></details><details><summary>Which browsers should I use?</summary><p>This version is intended for Chrome and Edge. Mobile devices and other browser engines have not been verified.</p></details></div></section>
