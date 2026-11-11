@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 root = Path(__file__).resolve().parents[1]
 dist = root / 'dist'
 origin = 'https://gifcroplab.com'
-pages = {'/': 'index.html', '/privacy/': 'privacy/index.html', '/licenses/': 'licenses/index.html'}
+pages = {'/': 'index.html', '/crop-gif-to-circle/': 'crop-gif-to-circle/index.html', '/privacy/': 'privacy/index.html', '/licenses/': 'licenses/index.html'}
 
 
 class Page(HTMLParser):
@@ -27,7 +27,7 @@ class Page(HTMLParser):
         if tag == 'link' and a.get('rel') == 'canonical': self.canonical.append(a.get('href'))
         if tag == 'meta' and a.get('name') == 'description': self.description.append(a.get('content'))
         if tag == 'meta' and a.get('name') == 'robots': self.noindex |= 'noindex' in a.get('content', '')
-        for key in ('href', 'src'):
+        for key in ('href', 'src', 'srcset'):
             if a.get(key): self.refs.append(a[key])
 
 
@@ -49,7 +49,7 @@ for url, name in pages.items():
         assert target(parsed.path).is_file(), (name, ref)
 
 locs = [x.text for x in ET.parse(dist / 'sitemap.xml').findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
-assert sorted(locs) == [origin + '/', origin + '/privacy/']
+assert sorted(locs) == [origin + '/', origin + '/crop-gif-to-circle/', origin + '/privacy/']
 not_found = Page()
 not_found.feed((dist / '404.html').read_text(encoding='utf-8'))
 assert not_found.noindex and not_found.h1 == 1 and not not_found.canonical, '404.html'
@@ -76,7 +76,17 @@ with ZipFile(archive_path) as archive:
         assert required in archive.namelist(), required
     wasm = archive.read('gifsicle-wasm-browser/src/gifsicle.wasm')
     assert hashlib.sha256(wasm).hexdigest() == provenance['core']['wasmSha256']
-expected = set(pages.values()) | {'404.html', 'robots.txt', 'sitemap.xml', '_headers', 'favicon.svg', 'favicon.png', 'apple-touch-icon.png', 'social.png'} | {'licenses/' + p.name for p in notices} | source_files
+examples = {
+    f'examples/{name}.{ext}'
+    for name in ('gif-crop-before', 'gif-crop-after', 'gif-freeform-before', 'gif-freeform-after', 'gif-circle-after')
+    for ext in ('gif', 'png')
+}
+examples |= {
+    f'examples/avatar-{name}.{ext}'
+    for name in ('robot-before', 'robot-circle', 'cat-before', 'cat-square')
+    for ext in ('gif', 'png')
+}
+expected = set(pages.values()) | {'404.html', 'robots.txt', 'sitemap.xml', '_headers', 'favicon.svg', 'favicon.png', 'apple-touch-icon.png', 'social.png'} | {'licenses/' + p.name for p in notices} | source_files | examples
 assert {p for p in files if not p.startswith('assets/')} == expected
 assert all(Path(p).suffix in {'.js', '.css'} for p in files if p.startswith('assets/'))
 print(json.dumps({'pages': list(pages), 'files': files, 'checks': 'canonical, H1, description, internal targets, sitemap, 404 noindex and home link, icons, original license bytes, publication file allowlist', 'sha256': {name: hashlib.sha256((dist / name).read_bytes()).hexdigest() for name in files}}, indent=2))

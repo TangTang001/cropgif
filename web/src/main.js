@@ -1,4 +1,3 @@
-import './styles.css';
 import { GifClient, readGIFFile } from './gif/client.js';
 import { inspectGIF } from './gif/inspect.js';
 import { GifError, normalizeError } from './gif/errors.js';
@@ -7,14 +6,20 @@ import { cropFilename } from './crop/filename.js';
 
 const $ = id => document.getElementById(id);
 const exampleButtons = document.querySelectorAll('[data-example]');
+const circlePage = Boolean($('circle'));
+const shapeButtons = [$(circlePage ? 'circle' : 'free'), $('square')];
 const examples = {
+  circle: { name: 'gif-crop-before.gif' },
+  'avatar-circle': { name: 'avatar-robot-before.gif', shape: 'circle' },
+  'avatar-square': { name: 'avatar-cat-before.gif', shape: 'square' },
   square: { name: 'gif-crop-before.gif', square: true },
   freeform: { name: 'gif-freeform-before.gif', rect: { x: 104, y: 0, width: 216, height: 180 } },
 };
 const client = new GifClient();
 let buffer, meta, selection, sourceURL, resultURL, drag, sourceName;
 let taskId = 0;
-let square = false, busy = false;
+let shape = circlePage ? 'circle' : 'free';
+let square = circlePage, busy = false;
 const size = n => n < 1048576 ? `${(n / 1024).toFixed(0)} KB` : `${(n / 1048576).toFixed(2)} MB`;
 function message(text, error = false) {
   $('status').setAttribute('role', error ? 'alert' : 'status');
@@ -38,7 +43,7 @@ function validDimensions() {
 function controls() {
   $('choose').disabled = $('file').disabled = busy;
   for (const button of exampleButtons) button.disabled = busy;
-  for (const id of ['width', 'height', 'reset', 'free', 'square']) $(id).disabled = busy || !buffer;
+  for (const control of [$('width'), $('height'), $('reset'), ...shapeButtons]) control.disabled = busy || !buffer;
   $('crop').disabled = busy || !buffer || !validDimensions();
   $('selection').setAttribute('aria-disabled', busy || !buffer);
   $('editor').setAttribute('aria-busy', busy);
@@ -61,6 +66,7 @@ function render(syncInputs = true) {
   if (!selection) return;
   const r = selection;
   const image = $('image-wrap');
+  image.classList.toggle('circle-crop', shape === 'circle');
   image.style.setProperty('--crop-left', `${r.x / meta.width * 100}%`);
   image.style.setProperty('--crop-top', `${r.y / meta.height * 100}%`);
   image.style.setProperty('--crop-width', `${r.width / meta.width * 100}%`);
@@ -74,8 +80,9 @@ function render(syncInputs = true) {
     $('width').removeAttribute('aria-invalid'); $('height').removeAttribute('aria-invalid');
   }
   for (const id of ['width', 'height']) $(id).max = square ? Math.min(meta.width, meta.height) : meta[id];
-  for (const [id, active] of [['free', !square], ['square', square]]) {
-    $(id).classList.toggle('active', active); $(id).setAttribute('aria-pressed', active);
+  for (const button of shapeButtons) {
+    const active = button.id === shape;
+    button.classList.toggle('active', active); button.setAttribute('aria-pressed', active);
   }
 }
 function update(rect) { selection = rect; clearResult(); render(); setState('ready'); message('Ready to crop.'); }
@@ -117,7 +124,13 @@ async function openGIF(name, readBytes, example) {
     sourceURL = URL.createObjectURL(new Blob([bytes], { type: 'image/gif' }));
     $('original').src = sourceURL; await $('original').decode();
     if (id !== taskId) return;
-    buffer = bytes; meta = found; square = example?.square ?? false;
+    buffer = bytes; meta = found;
+    if (circlePage) {
+      if (example) shape = example.shape ?? 'circle';
+    } else {
+      shape = example?.square ? 'square' : 'free';
+    }
+    square = shape !== 'free';
     sourceName = name;
     $('filename').textContent = name;
     $('image-wrap').hidden = false; $('upload-prompt').hidden = true;
@@ -157,9 +170,18 @@ for (const id of ['width', 'height']) {
   };
   $(id).onkeydown = event => { if (event.key === 'Escape') { update({ ...selection }); event.preventDefault(); } };
 }
-$('free').onclick = () => { square = false; update({ ...selection }); };
-$('square').onclick = () => { square = true; update(squareRect(selection)); };
-$('reset').onclick = () => { square = false; update({ x: 0, y: 0, width: meta.width, height: meta.height }); };
+for (const button of shapeButtons) {
+  button.onclick = () => {
+    shape = button.id;
+    square = shape !== 'free';
+    update(square ? squareRect(selection) : { ...selection });
+  };
+}
+$('reset').onclick = () => {
+  if (!circlePage) { shape = 'free'; square = false; }
+  const full = { x: 0, y: 0, width: meta.width, height: meta.height };
+  update(square ? squareRect(full) : full);
+};
 for (const el of document.querySelectorAll('.handle')) {
   el.tabIndex = 0; el.setAttribute('role', 'button');
   const names = { nw: 'top left', n: 'top', ne: 'top right', e: 'right', se: 'bottom right', s: 'bottom', sw: 'bottom left', w: 'left' };
@@ -198,12 +220,16 @@ $('crop').onclick = async () => {
   const id = ++taskId;
   endDrag(); clearResult(); setState('processing'); message('Cropping GIF. Please wait…');
   try {
-    const result = await client.run(buffer, { ...selection });
+    const result = await client.run(buffer, { ...selection }, shape);
     if (id !== taskId) return;
     resultURL = URL.createObjectURL(new Blob([result.bytes], { type: 'image/gif' }));
+    $('result').classList.toggle('round-result', shape === 'circle');
     $('result').src = resultURL; $('download').href = resultURL;
-    $('download').download = cropFilename(sourceName, result.meta.width, result.meta.height);
+    $('download').download = cropFilename(sourceName, result.meta.width, result.meta.height, shape);
     $('result-info').textContent = `${result.meta.width} × ${result.meta.height} px · ${result.meta.frames.length} frames · ${size(result.bytes.length)}`;
+    if (shape === 'circle' && result.details.quantizedFrames) {
+      $('result-info').textContent += '. Some colors were adjusted to make room for transparency.';
+    }
     $('result-filled').hidden = false; $('result-empty').hidden = true;
     $('result-label').textContent = 'Crop complete. Ready to download.';
     setState('success'); message('Your cropped GIF is ready below.');

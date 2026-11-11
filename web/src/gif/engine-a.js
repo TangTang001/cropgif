@@ -36,7 +36,7 @@ function quantized(rgba) {
   return { palette, index, transparentIndex, quantized: true };
 }
 
-export function cropA(buffer, rect, meta) {
+export function cropA(buffer, rect, meta, circle = false) {
   if (meta.plainText) throw new Error('方案 A 暂不支持 GIF Plain Text 扩展');
   const parsed = parseGIF(buffer);
   const sourceFrames = parsed.frames.filter(f => f.image);
@@ -68,6 +68,14 @@ export function cropA(buffer, rect, meta) {
     for (let y = 0; y < rect.height; y++) {
       const start = ((rect.y + y) * W + rect.x) * 4;
       rgba.set(canvas.subarray(start, start + rect.width * 4), y * rect.width * 4);
+    }
+    if (circle) {
+      const side = rect.width;
+      for (let y = 0; y < side; y++) for (let x = 0; x < side; x++) {
+        if ((2 * x + 1 - side) ** 2 + (2 * y + 1 - side) ** 2 > side ** 2) {
+          rgba[(y * side + x) * 4 + 3] = 0;
+        }
+      }
     }
     const out = indexed(rgba);
     if (out.quantized) quantizedFrames++;
