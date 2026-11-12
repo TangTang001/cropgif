@@ -1,8 +1,10 @@
 # GIF Crop Lab
 
-A browser-local animated GIF cropper. Selected GIFs are processed on the user's device.
+Crop and resize animated GIFs in your browser. Files are processed on your device.
 
-Website: https://gifcroplab.com/
+- [GIF Cropper](https://gifcroplab.com/) for freeform and square crops.
+- [Circle GIF Cropper](https://gifcroplab.com/crop-gif-to-circle/) for animated avatars with transparent corners.
+- [Resize GIF](https://gifcroplab.com/resize-gif/) to scale an animation by dimensions or percentage.
 
 ## Development and build
 
@@ -33,6 +35,6 @@ After deployment, check HTTPS, domain redirects, an unknown path returning HTTP 
 
 Copyright (C) 2026 TangTang001. Original GIF Crop Lab website code is licensed under **GPL-2.0-only**; see [LICENSE](LICENSE). Third-party components retain their original copyrights and licenses.
 
-Third-party notices are in `web/public/licenses/` and the website's `/licenses/` page. Gifsicle C source, browser build scripts, wrapper source and provenance are supplied in [the source archive](web/public/source/gifsicle-1.92-source.zip); see [source notes](web/public/source/README.txt) and [checksums](web/public/source/provenance.json).
+Third-party notices are in `web/public/licenses/` and the website's [third-party licenses page](https://gifcroplab.com/licenses/). Gifsicle C source, browser build scripts, wrapper source and provenance are supplied in [the source archive](web/public/source/gifsicle-1.92-source.zip); see [source notes](web/public/source/README.txt) and [checksums](web/public/source/provenance.json).
 
 Development research, prototypes, historical acceptance reports and test datasets are kept locally and are not part of the current release tree. Git history has not been rewritten.

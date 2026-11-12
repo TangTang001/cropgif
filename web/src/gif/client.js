@@ -13,7 +13,11 @@ export class GifClient {
     this.worker = null;
   }
 
-  async run(buffer, rect, shape) {
+  resize(buffer, target) {
+    return this.run(buffer, target, undefined, 'resize');
+  }
+
+  async run(buffer, rect, shape, operation = 'crop') {
     if (this.worker) throw new GifError('PROCESSING_FAILED', { reason: 'A task is already running.' });
     if (typeof Worker === 'undefined' || typeof WebAssembly === 'undefined') throw new GifError('UNSUPPORTED_ENV');
     if (buffer.byteLength > this.limits.maxFileBytes) throw new GifError('RESOURCE_LIMIT', { limit: 'maxFileBytes', actual: buffer.byteLength, allowed: this.limits.maxFileBytes });
@@ -71,7 +75,7 @@ export class GifClient {
         this.worker.onmessageerror = () => settle(new GifError('PROCESSING_FAILED', { reason: 'Worker response could not be decoded.' }));
         this.timer = setTimeout(() => settle(new GifError('TIMEOUT')), this.limits.timeoutMs);
         const copy = buffer.slice(0);
-        this.worker.postMessage({ buffer: copy, rect, shape, limits: this.limits }, [copy]);
+        this.worker.postMessage({ buffer: copy, rect, shape, operation, limits: this.limits }, [copy]);
       } catch (error) {
         settle(error.name === 'SecurityError' ? new GifError('UNSUPPORTED_ENV') : normalizeError(error));
       }

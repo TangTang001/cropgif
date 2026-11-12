@@ -8,7 +8,15 @@ gifsicle.tool.testType = value => Object.prototype.toString.call(value).slice(8,
 
 // Diagnostic adapter for the pinned 1.5.19 wrapper. Keep its core
 // and baseline path intact; expose the CLI return value and all stderr lines.
-export async function cropBDiagnostic(buffer, r) {
+export function cropBDiagnostic(buffer, r) {
+  return runGifsicle(buffer, `--crop ${r.x},${r.y}+${r.width}x${r.height} input.gif -o /out/result.gif --logical-screen ${r.width}x${r.height}`);
+}
+
+export function resizeB(buffer, { width, height }) {
+  return runGifsicle(buffer, `--resize-method sample --resize ${width}x${height} input.gif -o /out/result.gif`);
+}
+
+async function runGifsicle(buffer, command) {
   const marker = 'n=t(o,i)';
   const source = gifsicle.tool.workerLocalUrl;
   if (source.split(marker).length !== 2) throw new GifError('PROCESSING_FAILED', { reason: 'Pinned engine adapter mismatch' });
@@ -16,7 +24,6 @@ export async function cropBDiagnostic(buffer, r) {
   const patched = source.replace(marker, '(self.__cropExitCode=n=t(o,i))');
   const url = URL.createObjectURL(new Blob([prefix, patched], { type: 'text/javascript' }));
   const worker = createChildWorker(url);
-  const command = `--crop ${r.x},${r.y}+${r.width}x${r.height} input.gif -o /out/result.gif --logical-screen ${r.width}x${r.height}`;
   try {
     const result = await new Promise((resolve, reject) => {
       worker.onmessage = ({ data }) => resolve(data);

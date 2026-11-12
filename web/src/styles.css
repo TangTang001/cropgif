@@ -117,7 +117,7 @@ footer a:not(.brand):hover{text-decoration:underline}footer{flex-wrap:wrap;paddi
 .breadcrumbs li+li::before{content:'›';margin-right:8px;color:var(--muted)}
 .breadcrumbs a,.breadcrumbs a:first-child{display:inline-flex;align-items:center;min-height:32px;padding:0;font-size:12px}
 .breadcrumbs a:hover{text-decoration:underline}
-.circle-page .intro{padding-top:20px}
+.circle-page .intro,.resize-page .intro{padding-top:20px}
 @media(max-width:620px){
   .site-header:has(.tool-navigation){height:auto}
   .header-inner:has(.tool-navigation){flex-wrap:wrap;gap:0;padding-top:16px}
@@ -140,7 +140,13 @@ footer a:not(.brand):hover{text-decoration:underline}footer{flex-wrap:wrap;paddi
 .drop-upload:disabled{cursor:wait;opacity:.65}
 .drop-upload .button{color:#fff}
 #local-file-note{padding-inline:12px;line-height:1.5}
-.replace-file{margin-bottom:12px}
+.file-actions{display:flex;align-items:center;gap:8px;padding:4px 0 12px}
+.file-actions .button{padding-inline:12px;font-size:12px}
+.file-actions .replace-file{color:var(--primary);background:var(--selected-bg);border-color:var(--border)}
+.file-actions .replace-file:hover:not(:disabled){border-color:var(--primary)}
+.file-actions .replace-file svg{width:15px;height:15px}
+.file-actions .clear-file{color:var(--muted);background:transparent;border-color:var(--border)}
+.file-actions .clear-file:hover:not(:disabled){color:var(--ink);background:var(--canvas-bg)}
 .drop-upload:hover:not(:disabled) .button,.drop-stage.drag-over .button{background:var(--primary-hover)}
 .drop-stage.drag-over{outline:2px dashed var(--primary);outline-offset:-3px}
 .crop-use-cases{padding:36px 0;border-top:0;border-bottom:1px solid var(--border)}
@@ -154,4 +160,23 @@ footer a:not(.brand):hover{text-decoration:underline}footer{flex-wrap:wrap;paddi
   .crop-guide{padding-block:28px;gap:18px}
   .crop-use-cases{padding-block:28px}
   .crop-use-cases .example-card{grid-template-columns:minmax(0,1fr);gap:16px}
+}
+
+.related-tool{color:var(--primary);text-decoration:underline}
+.resize-frame::after{content:none}
+.resize-handles{position:absolute;inset:0}
+.resize-page #editor[aria-busy="true"] .resize-handles{pointer-events:none}
+.resize-hint{margin:10px 0 0;color:var(--muted);font-size:12px;line-height:1.5}
+.resize-page .file-actions{padding-top:10px}
+.resize-modes{margin-bottom:16px}
+.resize-modes .shape,.resize-lock{display:flex;align-items:center;gap:5px;cursor:pointer}
+.resize-modes .shape:has(input:checked){background:var(--selected-bg);color:var(--primary)}
+.resize-settings input[type="radio"],.resize-settings input[type="checkbox"]{accent-color:var(--primary);margin:0}
+.resize-lock{margin-top:12px;font-size:13px;min-height:36px}
+.resize-settings #percentage-controls>label{display:block;font-size:12px;margin-bottom:6px}
+.resize-target{font-size:12px;color:var(--muted);margin:12px 0 0}
+.resize-target:empty,.resize-settings .field-error:empty{display:none}
+@media(max-width:620px){
+  .header-inner .tool-navigation{gap:clamp(9px,3.8vw,24px);flex-wrap:wrap}
+  .resize-settings input[type="number"]{font-size:16px}
 }

@@ -41,8 +41,8 @@ function validDimensions() {
   }) && (!square || $('width').valueAsNumber === $('height').valueAsNumber);
 }
 function controls() {
-  $('choose').disabled = $('replace-file').disabled = $('file').disabled = busy;
-  $('replace-file').hidden = !buffer;
+  $('choose').disabled = $('replace-file').disabled = $('clear-file').disabled = $('file').disabled = busy;
+  $('file-actions').hidden = !buffer;
   for (const button of exampleButtons) button.disabled = busy;
   for (const control of [$('width'), $('height'), $('reset'), ...shapeButtons]) control.disabled = busy || !buffer;
   $('crop').disabled = busy || !buffer || !validDimensions();
@@ -81,6 +81,9 @@ function render(syncInputs = true) {
     $('width').removeAttribute('aria-invalid'); $('height').removeAttribute('aria-invalid');
   }
   for (const id of ['width', 'height']) $(id).max = square ? Math.min(meta.width, meta.height) : meta[id];
+  syncShapeButtons();
+}
+function syncShapeButtons() {
   for (const button of shapeButtons) {
     const active = button.id === shape;
     button.classList.toggle('active', active); button.setAttribute('aria-pressed', active);
@@ -120,16 +123,39 @@ function openExample(key) {
 for (const button of exampleButtons) {
   button.onclick = () => openExample(button.dataset.example);
 }
-async function openGIF(name, readBytes, example) {
-  if (busy) return;
-  const id = ++taskId;
-  $('file-dialog').close(); $('file-error').textContent = '';
-  clearResult(); buffer = meta = selection = sourceName = undefined; drag = undefined;
+function clearSource() {
+  endDrag();
+  $('file-dialog').close();
+  $('file-error').textContent = '';
+  clearResult();
+  buffer = meta = selection = sourceName = undefined;
   if (sourceURL) URL.revokeObjectURL(sourceURL);
   sourceURL = undefined; $('original').removeAttribute('src');
   $('image-wrap').hidden = true; $('upload-prompt').hidden = false;
   $('filename').textContent = 'No GIF selected'; $('file-summary').textContent = '';
-  $('dimension-error').textContent = ''; $('width').value = $('height').value = '';
+  $('dimension-error').textContent = '';
+  for (const id of ['width', 'height']) {
+    $(id).value = '';
+    $(id).removeAttribute('aria-invalid');
+    $(id).removeAttribute('max');
+  }
+  stage.classList.remove('drag-over');
+}
+$('clear-file').onclick = () => {
+  if (busy || !buffer) return;
+  clearSource();
+  $('file').value = '';
+  shape = circlePage ? 'circle' : 'free';
+  square = circlePage;
+  syncShapeButtons();
+  setState('empty');
+  message('Choose a local GIF to begin.');
+  $('choose').focus({ preventScroll: true });
+};
+async function openGIF(name, readBytes, example) {
+  if (busy) return;
+  const id = ++taskId;
+  clearSource();
   setState('loading'); message('Opening your GIF…');
   try {
     const bytes = await readBytes();

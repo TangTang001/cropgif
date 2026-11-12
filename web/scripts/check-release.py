@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 root = Path(__file__).resolve().parents[1]
 dist = root / 'dist'
 origin = 'https://gifcroplab.com'
-pages = {'/': 'index.html', '/crop-gif-to-circle/': 'crop-gif-to-circle/index.html', '/privacy/': 'privacy/index.html', '/licenses/': 'licenses/index.html'}
+pages = {'/': 'index.html', '/crop-gif-to-circle/': 'crop-gif-to-circle/index.html', '/resize-gif/': 'resize-gif/index.html', '/privacy/': 'privacy/index.html', '/licenses/': 'licenses/index.html'}
 
 
 class Page(HTMLParser):
@@ -21,14 +21,29 @@ class Page(HTMLParser):
         self.refs = []
         self.noindex = False
 
+        self.structured_data = []
+        self.json_ld = None
+
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
+        if tag == 'script' and a.get('type') == 'application/ld+json':
+            self.json_ld = []
         if tag == 'h1': self.h1 += 1
         if tag == 'link' and a.get('rel') == 'canonical': self.canonical.append(a.get('href'))
         if tag == 'meta' and a.get('name') == 'description': self.description.append(a.get('content'))
         if tag == 'meta' and a.get('name') == 'robots': self.noindex |= 'noindex' in a.get('content', '')
         for key in ('href', 'src', 'srcset'):
             if a.get(key): self.refs.append(a[key])
+
+
+    def handle_data(self, data):
+        if self.json_ld is not None:
+            self.json_ld.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == 'script' and self.json_ld is not None:
+            self.structured_data.append(json.loads(''.join(self.json_ld)))
+            self.json_ld = None
 
 
 def target(path):
@@ -41,6 +56,21 @@ for url, name in pages.items():
     assert page.canonical == [origin + url], (name, page.canonical)
     assert page.h1 == 1 and len(page.description) == 1 and page.description[0], name
     assert page.noindex == (url == '/licenses/'), name
+    if url in {'/', '/crop-gif-to-circle/', '/resize-gif/'}:
+        markup, = page.structured_data
+        assert markup['@context'] == 'https://schema.org', name
+        app, *breadcrumbs = markup.get('@graph', [markup])
+        assert app['@type'] == 'WebApplication' and app['url'] == origin + url, name
+        assert app['name'] and app['description'] == page.description[0], name
+        assert app['offers'] == {'@type': 'Offer', 'price': 0}, name
+        if url == '/':
+            assert not breadcrumbs, name
+        else:
+            trail, = breadcrumbs
+            assert trail['@type'] == 'BreadcrumbList', name
+            assert [(item['position'], item['item']) for item in trail['itemListElement']] == [
+                (1, origin + '/'), (2, origin + url)
+            ], name
     for ref in page.refs:
         parsed = urlparse(ref)
         if parsed.scheme and parsed.netloc != 'gifcroplab.com': continue
@@ -49,7 +79,7 @@ for url, name in pages.items():
         assert target(parsed.path).is_file(), (name, ref)
 
 locs = [x.text for x in ET.parse(dist / 'sitemap.xml').findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
-assert sorted(locs) == [origin + '/', origin + '/crop-gif-to-circle/', origin + '/privacy/']
+assert sorted(locs) == sorted(origin + url for url in pages if url != '/licenses/')
 not_found = Page()
 not_found.feed((dist / '404.html').read_text(encoding='utf-8'))
 assert not_found.noindex and not_found.h1 == 1 and not not_found.canonical, '404.html'
@@ -78,7 +108,7 @@ with ZipFile(archive_path) as archive:
     assert hashlib.sha256(wasm).hexdigest() == provenance['core']['wasmSha256']
 examples = {
     f'examples/{name}.{ext}'
-    for name in ('gif-crop-before', 'gif-crop-after', 'gif-freeform-before', 'gif-freeform-after', 'gif-circle-after')
+    for name in ('gif-crop-before', 'gif-crop-after', 'gif-freeform-before', 'gif-freeform-after', 'gif-circle-after', 'gif-resize-sailboat-before', 'gif-resize-sailboat-after')
     for ext in ('gif', 'png')
 }
 examples |= {
@@ -89,4 +119,4 @@ examples |= {
 expected = set(pages.values()) | {'404.html', 'robots.txt', 'sitemap.xml', '_headers', 'favicon.svg', 'favicon.png', 'apple-touch-icon.png', 'social.png'} | {'licenses/' + p.name for p in notices} | source_files | examples
 assert {p for p in files if not p.startswith('assets/')} == expected
 assert all(Path(p).suffix in {'.js', '.css'} for p in files if p.startswith('assets/'))
-print(json.dumps({'pages': list(pages), 'files': files, 'checks': 'canonical, H1, description, internal targets, sitemap, 404 noindex and home link, icons, original license bytes, publication file allowlist', 'sha256': {name: hashlib.sha256((dist / name).read_bytes()).hexdigest() for name in files}}, indent=2))
+print(json.dumps({'pages': list(pages), 'files': files, 'checks': 'canonical, H1, description, structured data, internal targets, sitemap, 404 noindex and home link, icons, original license bytes, publication file allowlist', 'sha256': {name: hashlib.sha256((dist / name).read_bytes()).hexdigest() for name in files}}, indent=2))

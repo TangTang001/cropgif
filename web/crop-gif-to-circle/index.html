@@ -15,6 +15,42 @@
 <meta property="og:url" content="https://gifcroplab.com/crop-gif-to-circle/"><meta property="og:image" content="https://gifcroplab.com/social.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="GIF Crop Lab — crop animated GIFs on your device">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Crop GIF to Circle — GIF Crop Lab"><meta name="twitter:description" content="Crop a GIF into a circle for an animated avatar or profile picture. Preview and download your GIF with transparent corners. Your file stays on your device."><meta name="twitter:image" content="https://gifcroplab.com/social.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Crop GIF to Circle",
+      "url": "https://gifcroplab.com/crop-gif-to-circle/",
+      "description": "Crop a GIF into a circle for an animated avatar or profile picture. Preview and download your GIF with transparent corners. Your file stays on your device.",
+      "applicationCategory": "MultimediaApplication",
+      "browserRequirements": "Requires a browser with JavaScript and WebAssembly enabled.",
+      "offers": {
+        "@type": "Offer",
+        "price": 0
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "GIF Cropper",
+          "item": "https://gifcroplab.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Crop GIF to Circle",
+          "item": "https://gifcroplab.com/crop-gif-to-circle/"
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body class="circle-page">
 <a class="skip" href="#editor">Skip to the editor</a>
@@ -30,7 +66,7 @@
 </defs></svg>
 <header class="site-header"><div class="header-inner">
   <a class="brand" href="/" aria-label="GIF Crop Lab home"><span class="brand-icon"><svg><use href="#i-crop"/></svg></span><span>GIF Crop <span class="brand-accent">Lab</span></span></a>
-  <nav class="tool-navigation" aria-label="Main navigation"><a href="/">GIF Cropper</a><a href="/crop-gif-to-circle/" aria-current="page">Circle GIF Cropper</a><a class="section-link" href="#how-it-works">How it works</a><a class="section-link" href="#questions">FAQ</a></nav>
+  <nav class="tool-navigation" aria-label="Main navigation"><a href="/">GIF Cropper</a><a href="/crop-gif-to-circle/" aria-current="page">Circle GIF Cropper</a><a href="/resize-gif/">Resize GIF</a><a class="section-link" href="#how-it-works">How it works</a><a class="section-link" href="#questions">FAQ</a></nav>
   <span class="local-note"><svg><use href="#i-lock"/></svg> Files stay on your device</span>
 </div></header>
 <main>
@@ -44,7 +80,10 @@
         <div class="file-bar"><span class="file-name"><svg><use href="#i-image"/></svg><span id="filename">No GIF selected</span></span><span id="file-summary">Choose a local GIF to begin.</span></div>
         <div class="stage drop-stage" id="stage"><div id="upload-prompt" class="upload-prompt"><button class="drop-upload" id="choose" type="button" aria-label="Choose a GIF" aria-describedby="local-file-note"><span class="button primary">Choose a GIF</span><span id="local-file-note">Or drop a GIF here. Your file stays on your device.</span></button></div><div class="image-wrap" id="image-wrap" hidden><img id="original" alt="Original GIF before cropping" draggable="false"><div id="selection" class="selection" tabindex="0" role="group" aria-label="Crop selection" aria-describedby="selection-help"><span class="third vertical one"></span><span class="third vertical two"></span><span class="third horizontal one"></span><span class="third horizontal two"></span><span class="selection-tag" id="selection-tag">800 × 500</span><span class="handle nw" data-handle="nw"></span><span class="handle n" data-handle="n"></span><span class="handle ne" data-handle="ne"></span><span class="handle e" data-handle="e"></span><span class="handle se" data-handle="se"></span><span class="handle s" data-handle="s"></span><span class="handle sw" data-handle="sw"></span><span class="handle w" data-handle="w"></span></div></div></div>
         <div class="canvas-foot"><span><span class="live-dot"></span> Animated preview</span><span id="selection-help">Drag or use arrow keys. Shift: 10 px. Handles resize.</span></div>
-        <button class="button small replace-file" id="replace-file" type="button" hidden>Choose another GIF</button>
+        <div class="file-actions" id="file-actions" hidden>
+          <button class="button replace-file" id="replace-file" type="button"><svg aria-hidden="true"><use href="#i-image"/></svg> Choose another GIF</button>
+          <button class="button clear-file" id="clear-file" type="button">Clear GIF</button>
+        </div>
       </div>
       <aside class="settings" aria-label="Crop settings">
         <div class="settings-heading"><h3>Crop settings</h3><p>Choose a shape and set its size.</p></div>
@@ -58,7 +97,7 @@
   <section class="workspace result-section" id="result-section" aria-label="Cropped GIF result">
     <div class="workspace-top"><div class="workspace-title"><span class="step-number">02</span><h2>Cropped GIF</h2></div><span id="result-label">Adjust the frame, then click Crop GIF.</span></div>
     <div class="result-empty" id="result-empty"><span class="result-placeholder"><svg><use href="#i-crop"/></svg></span><div><h3>No cropped GIF yet</h3><p>Click Crop GIF to preview and download the result.</p></div></div>
-    <div class="result-filled" id="result-filled" hidden><div class="result-image circle-result"><img id="result" alt="Cropped animated GIF"></div><div class="result-details"><span class="success-label"><svg><use href="#i-check"/></svg> Crop complete</span><h3>Your GIF is ready</h3><p id="result-info"></p><a id="download" class="button primary" download="cropped.gif"><svg><use href="#i-download"/></svg> Download GIF</a><p class="result-helper">To change the result, adjust the crop area above.</p></div></div>
+    <div class="result-filled" id="result-filled" hidden><div class="result-image circle-result"><img id="result" alt="Cropped animated GIF"></div><div class="result-details"><span class="success-label"><svg><use href="#i-check"/></svg> Crop complete</span><h3>Your GIF is ready</h3><p id="result-info"></p><a id="download" class="button primary" download="cropped.gif"><svg><use href="#i-download"/></svg> Download GIF</a><p class="result-helper">To change the result, adjust the crop area above.</p><p class="result-helper">Need different dimensions? <a class="related-tool" href="/resize-gif/">Open GIF Resizer</a>.</p></div></div>
   </section>
   <section id="how-it-works" class="how-section"><div class="how-intro"><h2>How to crop a GIF into a circle</h2></div><ol class="steps"><li><span>01</span><div><h3>Choose a GIF</h3><p>Select a GIF from your device or drop it into the editor.</p></div></li><li><span>02</span><div><h3>Adjust the crop area</h3><p>Move or resize the circle over the part you want to keep. Enter the size in pixels for an exact crop.</p></div></li><li><span>03</span><div><h3>Crop and download</h3><p>Click Crop GIF, preview the result,<br>and download your animation.</p></div></li></ol></section>
   <section class="crop-example crop-use-cases" aria-labelledby="example-title">
@@ -97,7 +136,7 @@
   <section id="questions" class="faq-section"><div><h2>Frequently asked questions</h2></div><div class="faq-items"><details><summary>Does my GIF leave my device?</summary><p>No. This tool processes GIFs in your browser. Your image is not sent to a server.</p></details><details><summary>Will the animation keep playing?</summary><p>Successful exports keep the original frame count, frame delays, and loop setting.</p></details><details><summary>Why does a circle GIF still have square dimensions?</summary><p>The GIF has a square canvas. Pixels outside the circle are transparent, so your background shows through the corners.</p></details><details><summary>What does Square mode do?</summary><p>Choose Square to crop a 1:1 GIF without applying a circular mask. Choose Circle when you want the corners outside the circle to be transparent.</p></details><details><summary>Can the colors change?</summary><p>GIF frames have limited palette space. When the circle needs an extra transparency entry, the tool may adjust some colors and will show a notice next to the result.</p></details><details><summary>Can I crop a rectangle?</summary><p>Use the <a class="intro-tool-link" href="/">freeform GIF cropper</a> for a rectangle with independent width and height.</p></details><details><summary>What if a GIF cannot be cropped?</summary><p>Some GIFs use frame structures this version cannot preserve for a particular crop. Try a different crop area or another file.</p></details><details><summary>Which browsers should I use?</summary><p>Tested on desktop Chrome, Edge, and Firefox, and on Android Chrome. Use an up-to-date browser with JavaScript and WebAssembly enabled.</p></details></div></section>
 <section class="support-section" aria-labelledby="limits-title"><h2 id="limits-title">Supported files and browsers</h2><p>GIF files only. Current limits: 20 MiB per file, 4,194,304 canvas pixels, 500 frames, and 60,000,000 total frame pixels. All limits apply together. Processing stops after 60 seconds. These are protective limits, not a guarantee that every GIF within them will work on every device.</p><p>Tested on desktop Chrome, Edge, and Firefox, and on Android Chrome. If a crop fails, try a smaller crop area or choose another GIF. You can select another file without refreshing the page.</p></section>
 </main>
-<footer><a class="brand footer-brand" href="/"><svg><use href="#i-crop"/></svg> GIF Crop Lab</a><span>Crop animated GIFs in your browser.</span><a href="/privacy/">Privacy</a><a href="/licenses/" hidden>Licenses</a><a href="https://github.com/TangTang001/cropgif" hidden>Support on GitHub</a></footer>
+<footer><a class="brand footer-brand" href="/"><svg><use href="#i-crop"/></svg> GIF Crop Lab</a><span>Crop animated GIFs in your browser.</span><a href="/privacy/">Privacy</a></footer>
 <dialog id="file-dialog" class="file-dialog" aria-labelledby="file-dialog-title" aria-describedby="file-dialog-description">
   <h2 id="file-dialog-title">Choose a GIF file</h2>
   <p id="file-dialog-description">Only GIF files are supported. Please choose a GIF file.</p>
