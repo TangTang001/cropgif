@@ -7,11 +7,11 @@ import { cropFilename } from './crop/filename.js';
 const $ = id => document.getElementById(id);
 const exampleButtons = document.querySelectorAll('[data-example]');
 const circlePage = Boolean($('circle'));
+const stage = $('stage');
 const shapeButtons = [$(circlePage ? 'circle' : 'free'), $('square')];
 const examples = {
   circle: { name: 'gif-crop-before.gif' },
   'avatar-circle': { name: 'avatar-robot-before.gif', shape: 'circle' },
-  'avatar-square': { name: 'avatar-cat-before.gif', shape: 'square' },
   square: { name: 'gif-crop-before.gif', square: true },
   freeform: { name: 'gif-freeform-before.gif', rect: { x: 104, y: 0, width: 216, height: 180 } },
 };
@@ -41,7 +41,8 @@ function validDimensions() {
   }) && (!square || $('width').valueAsNumber === $('height').valueAsNumber);
 }
 function controls() {
-  $('choose').disabled = $('file').disabled = busy;
+  $('choose').disabled = $('replace-file').disabled = $('file').disabled = busy;
+  $('replace-file').hidden = !buffer;
   for (const button of exampleButtons) button.disabled = busy;
   for (const control of [$('width'), $('height'), $('reset'), ...shapeButtons]) control.disabled = busy || !buffer;
   $('crop').disabled = busy || !buffer || !validDimensions();
@@ -55,7 +56,7 @@ function setState(state) {
 }
 function fitImage() {
   if (!meta) return;
-  const stage = $('stage'), style = getComputedStyle(stage);
+  const style = getComputedStyle(stage);
   const width = stage.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
   const height = stage.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
   const scale = Math.min(1, width / meta.width, height / meta.height);
@@ -86,22 +87,38 @@ function render(syncInputs = true) {
   }
 }
 function update(rect) { selection = rect; clearResult(); render(); setState('ready'); message('Ready to crop.'); }
-$('choose').onclick = () => $('file').click();
+$('choose').onclick = $('replace-file').onclick = () => $('file').click();
 $('choose-again').onclick = () => { $('file-dialog').close(); $('file').click(); };
-$('file').onchange = () => {
-  const file = $('file').files[0];
+function openLocalFile(file) {
   if (file) openGIF(file.name, () => readGIFFile(file));
-};
+}
+$('file').onchange = () => openLocalFile($('file').files[0]);
+stage.addEventListener('dragover', event => {
+  if (!event.dataTransfer.types.includes('Files')) return;
+  event.preventDefault();
+  event.dataTransfer.dropEffect = busy ? 'none' : 'copy';
+  if (!busy) stage.classList.add('drag-over');
+});
+stage.addEventListener('dragleave', event => {
+  if (!stage.contains(event.relatedTarget)) stage.classList.remove('drag-over');
+});
+stage.addEventListener('drop', event => {
+  if (!event.dataTransfer.types.includes('Files')) return;
+  event.preventDefault();
+  stage.classList.remove('drag-over');
+  openLocalFile(event.dataTransfer.files[0]);
+});
+function openExample(key) {
+  const example = examples[key];
+  $('editor').scrollIntoView();
+  openGIF(example.name, async () => {
+    const response = await fetch(`/examples/${example.name}`);
+    if (!response.ok) throw new Error('Example unavailable');
+    return response.arrayBuffer();
+  }, example);
+}
 for (const button of exampleButtons) {
-  button.onclick = () => {
-    const example = examples[button.dataset.example];
-    $('editor').scrollIntoView();
-    openGIF(example.name, async () => {
-      const response = await fetch(`/examples/${example.name}`);
-      if (!response.ok) throw new Error('Example unavailable');
-      return response.arrayBuffer();
-    }, example);
-  };
+  button.onclick = () => openExample(button.dataset.example);
 }
 async function openGIF(name, readBytes, example) {
   if (busy) return;
@@ -236,7 +253,7 @@ $('crop').onclick = async () => {
   } catch (error) { if (id === taskId) { clearResult(); setState('error'); message(normalizeError(error).message, true); } }
   finally { if (id === taskId) controls(); }
 };
-const observer = new ResizeObserver(() => { endDrag(); fitImage(); }); observer.observe($('stage'));
+const observer = new ResizeObserver(() => { endDrag(); fitImage(); }); observer.observe(stage);
 addEventListener('pagehide', () => { ++taskId; endDrag(); client.close(); clearResult(); if (sourceURL) URL.revokeObjectURL(sourceURL); sourceURL = undefined; });
 addEventListener('pageshow', event => {
   if (!event.persisted) return;
@@ -246,3 +263,6 @@ addEventListener('pageshow', event => {
   } else { setState('empty'); message('Choose a local GIF to begin.'); }
 });
 setState('empty');
+if (circlePage && new URLSearchParams(location.search).get('example') === 'avatar-circle') {
+  openExample('avatar-circle');
+}
