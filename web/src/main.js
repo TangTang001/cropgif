@@ -29,7 +29,8 @@ function message(text, error = false) {
 function clearResult() {
   if (resultURL) URL.revokeObjectURL(resultURL);
   resultURL = undefined;
-  $('result').removeAttribute('src'); $('download').removeAttribute('href');
+  for (const attribute of ['src', 'width', 'height']) $('result').removeAttribute(attribute);
+  $('download').removeAttribute('href');
   $('download').removeAttribute('download');
   $('result-filled').hidden = true; $('result-empty').hidden = false;
   $('result-label').textContent = 'Adjust the frame, then click Crop GIF.';
@@ -166,6 +167,8 @@ async function openGIF(name, readBytes, example) {
     if (!['GIF87a', 'GIF89a'].includes(signature)) throw new GifError('INVALID_GIF');
     const found = inspectGIF(bytes);
     sourceURL = URL.createObjectURL(new Blob([bytes], { type: 'image/gif' }));
+    $('original').width = found.width;
+    $('original').height = found.height;
     $('original').src = sourceURL; await $('original').decode();
     if (id !== taskId) return;
     buffer = bytes; meta = found;
@@ -268,6 +271,8 @@ $('crop').onclick = async () => {
     if (id !== taskId) return;
     resultURL = URL.createObjectURL(new Blob([result.bytes], { type: 'image/gif' }));
     $('result').classList.toggle('round-result', shape === 'circle');
+    $('result').width = result.meta.width;
+    $('result').height = result.meta.height;
     $('result').src = resultURL; $('download').href = resultURL;
     $('download').download = cropFilename(sourceName, result.meta.width, result.meta.height, shape);
     $('result-info').textContent = `${result.meta.width} × ${result.meta.height} px · ${result.meta.frames.length} frames · ${size(result.bytes.length)}`;
