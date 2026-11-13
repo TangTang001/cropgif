@@ -102,6 +102,21 @@ function updateSettings() {
   fitFrame();
 }
 
+function resetSettings() {
+  form.reset();
+  width.value = source?.meta.width ?? '';
+  height.value = source?.meta.height ?? '';
+  lastDimension = width;
+}
+
+$('reset-settings').onclick = () => {
+  if (busy || !source) return;
+  endDrag();
+  resetSettings();
+  updateSettings();
+  message('Ready to resize.');
+};
+
 async function openGIF(name, read, isExample = false) {
   if (busy) return;
   setBusy(true);
@@ -125,10 +140,7 @@ async function openGIF(name, read, isExample = false) {
     $('upload-prompt').hidden = true;
     $('filename').textContent = name;
     $('file-summary').textContent = `${meta.width} × ${meta.height} · ${meta.frames.length} frames`;
-    form.reset();
-    width.value = meta.width;
-    height.value = meta.height;
-    lastDimension = width;
+    resetSettings();
     if (isExample) {
       modes.value = 'percentage';
       percentage.value = 50;
@@ -176,8 +188,7 @@ $('clear-file').onclick = () => {
   $('file-error').textContent = '';
   stage.classList.remove('drag-over');
   file.value = '';
-  form.reset();
-  lastDimension = width;
+  resetSettings();
   updateSettings();
   setBusy(false);
   message('Choose a local GIF to begin.');

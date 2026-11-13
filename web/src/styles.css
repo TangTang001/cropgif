@@ -189,3 +189,19 @@ footer a:not(.brand):hover{text-decoration:underline}footer{flex-wrap:wrap;paddi
   .home-how .steps li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px}
   .home-how .steps h3{margin-top:0}
 }
+
+.compression-controls{display:grid;gap:8px;min-width:0}
+.compression-controls label{color:var(--muted);font-size:12px;font-weight:600}
+.compression-controls select{width:100%;min-height:44px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--ink);font:inherit}
+.compression-controls select+label{margin-top:6px}
+.compression-controls select:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.compression-stage{container-type:size}
+@media(min-width:621px){
+  .compress-page .canvas-column{display:flex;flex-direction:column;padding-bottom:12px}
+  .compress-page .file-bar,.compress-page .file-actions{flex-shrink:0}
+  .compress-page .compression-stage{flex-grow:1;flex-shrink:0}
+  .compress-page .file-actions{padding-bottom:0}
+}
+.compression-preview{max-width:100%}
+.compression-preview>img{width:auto;height:auto;max-width:100%;max-height:100cqh}
+#result-note:empty{display:none}

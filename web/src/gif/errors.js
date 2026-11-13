@@ -1,6 +1,10 @@
 export const MESSAGES = Object.freeze({
   INVALID_GIF: 'Please choose a valid GIF file.',
   CORRUPT_GIF: 'This GIF contains damaged or incomplete data. Please export it again.',
+  INVALID_COMPRESSION: 'Choose supported compression settings.',
+  COMPRESSION_FRAMES: 'Choose a lower frame reduction to keep your GIF animated.',
+  COMPRESSION_DELAY: 'Some frames would be held for too long. Try a lower frame reduction.',
+  UNSUPPORTED_COMPRESSION: 'This GIF could not be compressed with its timing intact. Try different settings.',
   INVALID_RESIZE: 'Enter a valid width and height for the resized GIF.',
   RESIZE_LIMIT: 'The resized GIF would exceed processing limits. Choose smaller dimensions.',
   UNSUPPORTED_RESIZE: 'This GIF could not be resized with its animation intact. Try another size or file.',

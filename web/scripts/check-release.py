@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 root = Path(__file__).resolve().parents[1]
 dist = root / 'dist'
 origin = 'https://gifcroplab.com'
-pages = {'/': 'index.html', '/crop-gif-to-circle/': 'crop-gif-to-circle/index.html', '/resize-gif/': 'resize-gif/index.html', '/privacy/': 'privacy/index.html', '/licenses/': 'licenses/index.html'}
+pages = {'/': 'index.html', '/crop-gif-to-circle/': 'crop-gif-to-circle/index.html', '/resize-gif/': 'resize-gif/index.html', '/compress-gif/': 'compress-gif/index.html', '/privacy/': 'privacy/index.html', '/licenses/': 'licenses/index.html'}
 
 
 class Page(HTMLParser):
@@ -56,7 +56,7 @@ for url, name in pages.items():
     assert page.canonical == [origin + url], (name, page.canonical)
     assert page.h1 == 1 and len(page.description) == 1 and page.description[0], name
     assert page.noindex == (url == '/licenses/'), name
-    if url in {'/', '/crop-gif-to-circle/', '/resize-gif/'}:
+    if url in {'/', '/crop-gif-to-circle/', '/resize-gif/', '/compress-gif/'}:
         markup, = page.structured_data
         assert markup['@context'] == 'https://schema.org', name
         app, *breadcrumbs = markup.get('@graph', [markup])
@@ -108,7 +108,7 @@ with ZipFile(archive_path) as archive:
     assert hashlib.sha256(wasm).hexdigest() == provenance['core']['wasmSha256']
 examples = {
     f'examples/{name}.{ext}'
-    for name in ('gif-crop-before', 'gif-crop-after', 'gif-freeform-before', 'gif-freeform-after', 'gif-circle-after', 'gif-resize-sailboat-before', 'gif-resize-sailboat-after')
+    for name in ('gif-crop-before', 'gif-crop-after', 'gif-freeform-before', 'gif-freeform-after', 'gif-circle-after', 'gif-resize-sailboat-before', 'gif-resize-sailboat-after', 'gif-compress-sailboat-after')
     for ext in ('gif', 'png')
 }
 examples |= {

@@ -2,6 +2,7 @@ import { inspectGIF, validateCrop } from './inspect.js';
 import { cropHybrid } from './hybrid.js';
 import { cropA } from './engine-a.js';
 import { cropBDiagnostic, resizeB } from './engine-b.js';
+import { compressGIF } from './compress.js';
 import { validateResize } from './resize.js';
 import { LIMITS } from '../config.js';
 import { GifError, normalizeError } from './errors.js';
@@ -14,6 +15,11 @@ self.onmessage = async ({ data }) => {
   try {
     const limits = { ...LIMITS, ...data.limits };
     const meta = inspectGIF(data.buffer, limits);
+    if (data.operation === 'compress') {
+      const result = await compressGIF(data.buffer, meta, data.rect, limits);
+      self.postMessage({ ...result, processingMs: performance.now() - started }, [result.bytes.buffer]);
+      return;
+    }
     if (data.operation === 'resize') {
       const target = data.rect;
       validateResize(meta, target, limits);

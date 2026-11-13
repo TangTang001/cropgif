@@ -45,7 +45,7 @@
 </defs></svg>
 <header class="site-header"><div class="header-inner">
   <a class="brand" href="/" aria-label="GIF Crop Lab home"><span class="brand-icon"><svg><use href="#i-crop"/></svg></span><span>GIF Crop <span class="brand-accent">Lab</span></span></a>
-  <nav class="tool-navigation" aria-label="Main navigation"><a href="/" aria-current="page">GIF Cropper</a><a href="/crop-gif-to-circle/">Circle GIF Cropper</a><a href="/resize-gif/">Resize GIF</a><a class="section-link" href="#how-it-works">How it works</a><a class="section-link" href="#questions">FAQ</a></nav>
+  <nav class="tool-navigation" aria-label="Main navigation"><a href="/" aria-current="page">GIF Cropper</a><a href="/crop-gif-to-circle/">Circle GIF Cropper</a><a href="/resize-gif/">Resize GIF</a><a href="/compress-gif/">Compress GIF</a><a class="section-link" href="#how-it-works">How it works</a><a class="section-link" href="#questions">FAQ</a></nav>
   <span class="local-note"><svg><use href="#i-lock"/></svg> Files stay on your device</span>
 </div></header>
 <main>
@@ -100,7 +100,7 @@
       <div class="example-heading">
         <div>
           <h3 id="freeform-example-title">Reframe a wide GIF</h3>
-          <p>Use Freeform to trim empty space or recording edges. This crop cuts away the left side and keeps the full orbit in view.</p>
+          <p>Use Freeform to trim empty space or recording edges. This crop cuts away the left side and keeps the full orbit in view. The tighter frame makes the moving moon easier to see in a small preview while keeping the original height.</p>
         </div>
         <button class="button example-button" data-example="freeform" type="button">Try freeform crop</button>
       </div>
@@ -126,7 +126,7 @@
       <div class="example-heading">
         <div>
           <h3 id="square-example-title">Make a 1:1 thumbnail</h3>
-          <p>Use Square to make a 1:1 GIF for a thumbnail or post. This crop removes the outer clouds and keeps the paper plane in frame.</p>
+          <p>Use Square to make a 1:1 GIF for a thumbnail or post. This crop removes the outer clouds and keeps the paper plane in frame. A square thumbnail keeps the plane visible when a grid displays every item in a 1:1 tile.</p>
         </div>
         <button class="button example-button" data-example="square" type="button">Try square crop</button>
       </div>
@@ -150,7 +150,7 @@
     </article>
     <article class="example-card" aria-labelledby="circle-example-title">
       <div class="example-heading">
-        <div><h3 id="circle-example-title">Make a round animated avatar</h3><p>Use the Circle GIF Cropper to keep the face in focus and make the corners transparent. The example opens in the circle editor.</p></div>
+        <div><h3 id="circle-example-title">Make a round animated avatar</h3><p>Use the Circle GIF Cropper to keep the face in focus and make the corners transparent. The transparent corners let the avatar sit on different backgrounds without a visible square border.</p></div>
         <a class="button example-button" href="/crop-gif-to-circle/?example=avatar-circle#editor">Try circle crop</a>
       </div>
       <div class="example-grid example-grid-square">
@@ -165,6 +165,31 @@
         </picture></figure>
       </div>
     </article>
+  </section>
+  <section class="how-section crop-guide" aria-labelledby="platform-crop-sizes">
+    <div class="how-intro"><h2 id="platform-crop-sizes">GIF crop sizes for common platforms</h2></div>
+    <div class="crop-tips">
+      <div>
+        <h3>Discord avatar &middot; 128 &times; 128 px</h3>
+        <p>Use this compact square as a starting point and center the subject so it stays visible in the round preview at small sizes. Animated avatars require Nitro.</p>
+      </div>
+      <div>
+        <h3>X (Twitter) profile photo &middot; 400 &times; 400 px</h3>
+        <p>X recommends this size for profile photos. Use a still frame for your avatar because X does not support animated profile GIFs.</p>
+      </div>
+      <div>
+        <h3>WhatsApp sticker &middot; 512 &times; 512 px</h3>
+        <p>Use this exact canvas size for custom sticker packs, then convert the crop to transparent animated WebP at 500 KB or less.</p>
+      </div>
+      <div>
+        <h3>Instagram square post &middot; 1080 &times; 1080 px</h3>
+        <p>Use this 1:1 size to frame a square post and avoid relying on Instagram to downsize a larger photo. Export a still image for a photo post or convert the GIF to video to keep the motion.</p>
+      </div>
+      <div>
+        <h3>Slack emoji &middot; 128 &times; 128 px</h3>
+        <p>Start with a small square so the subject stays readable in chat. Slack recommends files under 128 KB and limits GIFs to 50 frames.</p>
+      </div>
+    </div>
   </section>
   <section id="questions" class="faq-section"><div><h2>Frequently asked questions</h2></div><div class="faq-items"><details><summary>Does my GIF leave my device?</summary><p>No. This tool processes GIFs in your browser. Your image is not sent to a server.</p></details><details><summary>Will the animation keep playing?</summary><p>Accepted results retain the frame count, frame delays, and loop information. If we cannot keep the colors or animation information, the crop is declined.</p></details><details><summary>What if a GIF cannot be cropped?</summary><p>Check the editor message first. If the file is too large, see the <a class="related-tool" href="#limits-title">supported file limits</a> below. If the file opens but a crop fails, try moving the frame or choosing a smaller crop. Some GIFs use frame structures the tool cannot preserve for a particular crop.</p></details><details><summary>Does cropping resize the GIF?</summary><p>Cropping removes the pixels outside the selection. To make the entire animation smaller while keeping the full scene, you need to resize it.</p></details><details><summary>Can I crop a GIF that already has a transparent background?</summary><p>Transparency inside the selected area stays part of a successful freeform or square crop. For a circular result with transparent corners, use the <a class="intro-tool-link" href="/crop-gif-to-circle/">circle GIF cropper</a>.</p></details><details><summary>Will a crop make the GIF file smaller?</summary><p>Check the result's file size after exporting. It depends on how the remaining pixels change from frame to frame and how the animation is encoded.</p></details><details><summary>Can I move the frame with the keyboard?</summary><p>Focus the crop frame and press an arrow key to move it by one pixel. Hold Shift with an arrow key to move it by ten pixels.</p></details><details><summary>Which browsers should I use?</summary><p>Tested on desktop Chrome, Edge, and Firefox, and on Android Chrome. Use an up-to-date browser with JavaScript and WebAssembly enabled.</p></details></div></section>
 <section class="support-section" aria-labelledby="limits-title"><h2 id="limits-title">Supported files and browsers</h2><p>GIF files only. Current limits: 20 MiB per file, 4,194,304 canvas pixels, 500 frames, and 60,000,000 total frame pixels. All limits apply together. Processing stops after 60 seconds. These are protective limits, not a guarantee that every GIF within them will work on every device.</p><p>Tested on desktop Chrome, Edge, and Firefox, and on Android Chrome. If a crop fails, try a smaller crop area or choose another GIF. You can select another file without refreshing the page.</p></section>

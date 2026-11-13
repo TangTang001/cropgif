@@ -16,7 +16,18 @@ export function resizeB(buffer, { width, height }) {
   return runGifsicle(buffer, `--resize-method sample --resize ${width}x${height} input.gif -o /out/result.gif`);
 }
 
-async function runGifsicle(buffer, command) {
+export function checkGifsicleInput(buffer) {
+  return runGifsicle(buffer, 'input.gif -o /out/result.gif');
+}
+
+export function compressB(buffer, { colors, target }) {
+  const flags = ['-O2', '-Okeep-empty'];
+  if (colors) flags.push('--colors', colors, '--no-dither');
+  if (target) flags.push('--resize-method', 'sample', '--resize', `${target.width}x${target.height}`);
+  return runGifsicle(buffer, [...flags, 'input.gif', '-o', '/out/result.gif'].join(' '), Boolean(colors));
+}
+
+async function runGifsicle(buffer, command, allowTrivialPalette = false) {
   const marker = 'n=t(o,i)';
   const source = gifsicle.tool.workerLocalUrl;
   if (source.split(marker).length !== 2) throw new GifError('PROCESSING_FAILED', { reason: 'Pinned engine adapter mismatch' });
@@ -37,7 +48,7 @@ async function runGifsicle(buffer, command) {
         : lines.some(s => /read error|corrupt|truncat/i.test(s)) ? 'CORRUPT_GIF' : 'PROCESSING_FAILED';
       throw new GifError(code, details);
     }
-    if (lines.some((s, i) => !/warning: (too many colors, using local colormaps|background color not in colormap)/.test(s) && !(i > 0 && lines[i-1].includes('warning: too many colors, using local colormaps') && /^\(You may want to try .*--colors 256.*\.\)$/.test(s)))) {
+    if (lines.some((s, i) => !(allowTrivialPalette && /^this\.program: warning: trivial adaptive palette \(only \d+ colors? in source\)$/.test(s)) && !/warning: (too many colors, using local colormaps|background color not in colormap)/.test(s) && !(i > 0 && lines[i-1].includes('warning: too many colors, using local colormaps') && /^\(You may want to try .*--colors 256.*\.\)$/.test(s)))) {
       throw new GifError('PROCESSING_FAILED', details);
     }
     const file = Array.isArray(result.value) && result.value.find(f => f.name === 'result.gif');

@@ -17,6 +17,10 @@ export class GifClient {
     return this.run(buffer, target, undefined, 'resize');
   }
 
+  compress(buffer, options) {
+    return this.run(buffer, options, undefined, 'compress');
+  }
+
   async run(buffer, rect, shape, operation = 'crop') {
     if (this.worker) throw new GifError('PROCESSING_FAILED', { reason: 'A task is already running.' });
     if (typeof Worker === 'undefined' || typeof WebAssembly === 'undefined') throw new GifError('UNSUPPORTED_ENV');

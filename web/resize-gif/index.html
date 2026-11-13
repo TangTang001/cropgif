@@ -66,7 +66,7 @@
 </defs></svg>
 <header class="site-header"><div class="header-inner">
   <a class="brand" href="/" aria-label="GIF Crop Lab home"><span class="brand-icon"><svg><use href="#i-crop"/></svg></span><span>GIF Crop <span class="brand-accent">Lab</span></span></a>
-  <nav class="tool-navigation" aria-label="Main navigation"><a href="/">GIF Cropper</a><a href="/crop-gif-to-circle/">Circle GIF Cropper</a><a href="/resize-gif/" aria-current="page">Resize GIF</a><a class="section-link" href="#how-it-works">How it works</a><a class="section-link" href="#questions">FAQ</a></nav>
+  <nav class="tool-navigation" aria-label="Main navigation"><a href="/">GIF Cropper</a><a href="/crop-gif-to-circle/">Circle GIF Cropper</a><a href="/resize-gif/" aria-current="page">Resize GIF</a><a href="/compress-gif/">Compress GIF</a><a class="section-link" href="#how-it-works">How it works</a><a class="section-link" href="#questions">FAQ</a></nav>
   <span class="local-note"><svg><use href="#i-lock"/></svg> Files stay on your device</span>
 </div></header>
 <main class="resize-page">
@@ -114,6 +114,7 @@
             <label for="percentage">Scale from original</label>
             <div class="input-wrap"><input id="percentage" type="number" min="0" step="any" inputmode="decimal" value="100" aria-describedby="size-error"><span>%</span></div>
           </div>
+          <button class="reset" id="reset-settings" type="button"><svg aria-hidden="true"><use href="#i-reset"/></svg> Reset to original size</button>
           <p class="resize-target" id="resize-target" aria-live="polite"></p>
           <p class="field-error" id="size-error" role="status"></p>
         </fieldset>
@@ -130,7 +131,7 @@
     <div class="result-empty" id="result-empty"><span class="result-placeholder"><svg aria-hidden="true"><use href="#i-image"/></svg></span><div><h3>No resized GIF yet</h3><p>Set the output size and select Resize GIF to preview it here.</p></div></div>
     <div class="result-filled" id="result-filled" hidden>
       <div class="result-image"><img id="result" alt="Resized animated GIF"></div>
-      <div class="result-details"><h3>Your GIF is ready</h3><p id="result-info"></p><a id="download" class="button primary" download><svg aria-hidden="true"><use href="#i-download"/></svg> Download GIF</a></div>
+      <div class="result-details"><h3>Your GIF is ready</h3><p id="result-info"></p><p class="result-helper">Need a smaller file? <a class="related-tool" href="/compress-gif/">Compress GIF</a>.</p><a id="download" class="button primary" download><svg aria-hidden="true"><use href="#i-download"/></svg> Download GIF</a></div>
     </div>
   </section>
   <section id="how-it-works" class="how-section">

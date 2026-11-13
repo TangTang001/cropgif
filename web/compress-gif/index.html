@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/src/styles.css">
+<title>Compress GIF Online Free | GIF Crop Lab</title>
+<meta name="description" content="Compress GIFs online by reducing colors, dimensions, or frames. Compare file sizes and download your optimized GIF. Files stay on your device.">
+<link rel="canonical" href="https://gifcroplab.com/compress-gif/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#2563eb">
+<meta property="og:type" content="website"><meta property="og:site_name" content="GIF Crop Lab">
+<meta property="og:title" content="Compress GIF Online Free | GIF Crop Lab">
+<meta property="og:description" content="Make animated GIF files smaller in your browser.">
+<meta property="og:url" content="https://gifcroplab.com/compress-gif/"><meta property="og:image" content="https://gifcroplab.com/social.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="GIF Crop Lab — crop animated GIFs on your device">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Compress GIF Online Free | GIF Crop Lab"><meta name="twitter:description" content="Make animated GIF files smaller in your browser."><meta name="twitter:image" content="https://gifcroplab.com/social.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Compress GIF Online",
+      "url": "https://gifcroplab.com/compress-gif/",
+      "description": "Compress GIFs online by reducing colors, dimensions, or frames. Compare file sizes and download your optimized GIF. Files stay on your device.",
+      "applicationCategory": "MultimediaApplication",
+      "browserRequirements": "Requires a browser with JavaScript and WebAssembly enabled.",
+      "offers": {
+        "@type": "Offer",
+        "price": 0
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "GIF Cropper",
+          "item": "https://gifcroplab.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Compress GIF",
+          "item": "https://gifcroplab.com/compress-gif/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#editor">Skip to the editor</a>
+<svg class="icon-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+  <symbol id="i-crop" viewBox="0 0 24 24"><path d="M7 3v14h14M3 7h14v14"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 9M4 4v6h6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/></symbol>
+</defs></svg>
+<header class="site-header"><div class="header-inner">
+  <a class="brand" href="/" aria-label="GIF Crop Lab home"><span class="brand-icon"><svg><use href="#i-crop"/></svg></span><span>GIF Crop <span class="brand-accent">Lab</span></span></a>
+  <nav class="tool-navigation" aria-label="Main navigation"><a href="/">GIF Cropper</a><a href="/crop-gif-to-circle/">Circle GIF Cropper</a><a href="/resize-gif/">Resize GIF</a><a href="/compress-gif/" aria-current="page">Compress GIF</a><a class="section-link" href="#how-it-works">How it works</a><a class="section-link" href="#questions">FAQ</a></nav>
+  <span class="local-note"><svg><use href="#i-lock"/></svg> Files stay on your device</span>
+</div></header>
+<main class="resize-page compress-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">GIF Cropper</a></li><li aria-current="page">Compress GIF</li></ol></nav>
+  <section class="intro">
+    <h1>Compress GIF Online</h1>
+    <p class="intro-description">Make an animated GIF smaller by reducing its colors, dimensions, or frame count. Compare the result before downloading.</p>
+  </section>
+  <section class="workspace" id="editor" aria-label="GIF compression editor">
+    <div class="workspace-top"><div class="workspace-title"><span class="step-number">01</span><h2>GIF editor</h2></div><input id="file" type="file" accept="image/gif,.gif" hidden></div>
+    <p id="file-error" class="file-error" role="alert"></p>
+    <div class="editor-grid">
+      <div class="canvas-column">
+        <div class="file-bar"><span class="file-name"><svg aria-hidden="true"><use href="#i-image"/></svg><span id="filename">No GIF selected</span></span><span id="file-summary"></span></div>
+        <div class="stage drop-stage compression-stage" id="stage">
+          <div id="upload-prompt" class="upload-prompt"><button class="drop-upload" id="choose" type="button" aria-label="Choose a GIF" aria-describedby="local-file-note"><span class="button primary">Choose a GIF</span><span id="local-file-note">Or drop a GIF here. Your file stays on your device.</span></button></div>
+          <div class="image-wrap resize-frame compression-preview" id="source-frame" hidden>
+            <img id="original" alt="Original animated GIF" draggable="false">
+          </div>
+        </div>
+        <div class="file-actions" id="file-actions" hidden>
+          <button class="button replace-file" id="replace-file" type="button"><svg aria-hidden="true"><use href="#i-image"/></svg> Choose another GIF</button>
+          <button class="button clear-file" id="clear-file" type="button">Clear GIF</button>
+        </div>
+      </div>
+      <form class="settings" id="compress-form" aria-label="Compression settings">
+        <div class="settings-heading"><h3>Compression settings</h3><p>Choose which details to keep.</p></div>
+        <fieldset class="shape-field compression-controls" id="compress-controls" disabled>
+          <legend>Compression options</legend>
+          <label for="scale">Dimensions</label>
+          <select id="scale" name="scale"><option value="100">Original size</option><option value="75">75% of original</option><option value="50">50% of original</option></select>
+          <label for="colors">Colors</label>
+          <select id="colors" name="colors"><option value="0">Original colors</option><option value="128">Up to 128 colors</option><option value="64">Up to 64 colors</option><option value="32">Up to 32 colors</option></select>
+          <label for="step">Frames</label>
+          <select id="step" name="step"><option value="1">Keep all frames</option><option value="2">Keep every 2nd frame</option><option value="3">Keep every 3rd frame</option></select>
+          <button class="reset" id="reset-settings" type="button"><svg aria-hidden="true"><use href="#i-reset"/></svg> Reset compression settings</button>
+          <p class="resize-target" id="compress-target" aria-live="polite"></p>
+        </fieldset>
+        <div class="settings-bottom">
+          <button class="button primary crop-button" id="compress-submit" type="submit" disabled><span>Compress GIF</span><svg class="end-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <p class="processing-status" id="status" role="status">Choose a local GIF to begin.</p>
+          <p class="private-note"><svg aria-hidden="true"><use href="#i-lock"/></svg> Processed on your device.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+  <section class="workspace result-section" id="result-section" aria-label="Compressed GIF result">
+    <div class="workspace-top"><div class="workspace-title"><span class="step-number">02</span><h2>Compressed GIF</h2></div></div>
+    <div class="result-empty" id="result-empty"><span class="result-placeholder"><svg aria-hidden="true"><use href="#i-image"/></svg></span><div><h3>No compressed GIF yet</h3><p>Choose your settings and select Compress GIF to preview the result.</p></div></div>
+    <div class="result-filled" id="result-filled" hidden>
+      <div class="result-image"><img id="result" alt="Compressed animated GIF"></div>
+      <div class="result-details"><h3>Your GIF is ready</h3><p id="result-info"></p><p id="result-savings" aria-live="polite"></p><p id="result-note" class="result-helper"></p><a id="download" class="button primary" download><svg aria-hidden="true"><use href="#i-download"/></svg> Download GIF</a></div>
+    </div>
+  </section>
+  <section id="how-it-works" class="how-section">
+    <div class="how-intro"><h2>How to compress a GIF</h2></div>
+    <ol class="steps">
+      <li><span>01</span><div><h3>Choose a GIF</h3><p>Select a file from your device or drag it into the editor.</p></div></li>
+      <li><span>02</span><div><h3>Choose what to reduce</h3><p>Start with the original settings, or reduce dimensions, colors, or frames for a smaller file.</p></div></li>
+      <li><span>03</span><div><h3>Preview and download</h3><p>Select Compress GIF, compare file sizes, and check the animation before downloading.</p></div></li>
+    </ol>
+  </section>
+  <section class="crop-example crop-use-cases" aria-labelledby="example-title">
+    <h2 id="example-title">See GIF compression in action</h2>
+    <article class="example-card" aria-labelledby="sailboat-example-title">
+      <div class="example-heading">
+        <div>
+          <h3 id="sailboat-example-title">Make a smaller sailboat GIF</h3>
+          <p>Scale to 50%, use up to 64 colors, and keep every second frame. The scene stays in view and the loop keeps its original duration.</p>
+        </div>
+        <button class="button example-button" data-compress-example type="button">Try this compression</button>
+      </div>
+      <div class="example-grid example-grid-half">
+        <figure>
+          <figcaption><strong>Before</strong><span>320 × 180 px</span></figcaption>
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="/examples/gif-resize-sailboat-before.png">
+            <img src="/examples/gif-resize-sailboat-before.gif" width="320" height="180" loading="lazy" alt="A sailboat bobbing on blue waves beneath moving clouds">
+          </picture>
+        </figure>
+        <svg class="example-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
+        <figure>
+          <figcaption><strong>After</strong><span>160 × 90 px</span></figcaption>
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcset="/examples/gif-compress-sailboat-after.png">
+            <img src="/examples/gif-compress-sailboat-after.gif" width="160" height="90" loading="lazy" alt="The full sailboat animation scaled to half its original width and height">
+          </picture>
+        </figure>
+      </div>
+    </article>
+  </section>
+  <section id="questions" class="faq-section">
+    <div><h2>Frequently asked questions</h2></div>
+    <div class="faq-items">
+      <details><summary>Can I compress a GIF without changing its appearance?</summary><p>Start with the default settings. They optimize how the GIF stores its frames while keeping the original dimensions, colors, and frame count.</p></details>
+      <details><summary>What happens when I remove frames?</summary><p>Motion may look less smooth. The tool adds the skipped frame delays to the frames it keeps and preserves the GIF's loop setting.</p></details>
+      <details><summary>Why is the result larger?</summary><p>An already optimized GIF can grow when re-encoded. Keep the original if the result is larger, or try fewer colors, smaller dimensions, or fewer frames.</p></details>
+      <details><summary>What if I need an exact size?</summary><p>Use <a class="related-tool" href="/resize-gif/">Resize GIF</a> to set a specific width or height.</p></details>
+      <details><summary>Does my GIF leave my device?</summary><p>Your browser compresses the GIF locally. Your file stays on your device.</p></details>
+    </div>
+  </section>
+  <section class="support-section" aria-labelledby="limits-title">
+    <h2 id="limits-title">Supported files and sizes</h2>
+    <p>Choose a GIF up to 20 MiB and 500 frames. Both the original and the compressed GIF must fit within 4,194,304 pixels per canvas and 60,000,000 pixels across all frames. If the output exceeds these limits, choose a smaller size.</p>
+  </section>
+</main>
+<footer><a class="brand footer-brand" href="/"><svg><use href="#i-crop"/></svg> GIF Crop Lab</a><span>Compress animated GIFs in your browser.</span><a href="/privacy/">Privacy</a><a href="/licenses/">Licenses</a></footer>
+<script type="module" src="/src/compress-page.js"></script>
+</body></html>

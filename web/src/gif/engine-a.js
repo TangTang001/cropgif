@@ -36,7 +36,7 @@ function quantized(rgba) {
   return { palette, index, transparentIndex, quantized: true };
 }
 
-export function cropA(buffer, rect, meta, circle = false) {
+export function cropA(buffer, rect, meta, circle = false, frameDelays = null) {
   if (meta.plainText) throw new Error('方案 A 暂不支持 GIF Plain Text 扩展');
   const parsed = parseGIF(buffer);
   const sourceFrames = parsed.frames.filter(f => f.image);
@@ -64,25 +64,27 @@ export function cropA(buffer, rect, meta, circle = false) {
       const j = ((y + raw.y) * W + x + raw.x) * 4;
       canvas[j] = color[0]; canvas[j + 1] = color[1]; canvas[j + 2] = color[2]; canvas[j + 3] = 255;
     }
-    const rgba = new Uint8Array(rect.width * rect.height * 4);
-    for (let y = 0; y < rect.height; y++) {
-      const start = ((rect.y + y) * W + rect.x) * 4;
-      rgba.set(canvas.subarray(start, start + rect.width * 4), y * rect.width * 4);
-    }
-    if (circle) {
-      const side = rect.width;
-      for (let y = 0; y < side; y++) for (let x = 0; x < side; x++) {
-        if ((2 * x + 1 - side) ** 2 + (2 * y + 1 - side) ** 2 > side ** 2) {
-          rgba[(y * side + x) * 4 + 3] = 0;
+    if (!frameDelays || frameDelays.has(n)) {
+      const rgba = new Uint8Array(rect.width * rect.height * 4);
+      for (let y = 0; y < rect.height; y++) {
+        const start = ((rect.y + y) * W + rect.x) * 4;
+        rgba.set(canvas.subarray(start, start + rect.width * 4), y * rect.width * 4);
+      }
+      if (circle) {
+        const side = rect.width;
+        for (let y = 0; y < side; y++) for (let x = 0; x < side; x++) {
+          if ((2 * x + 1 - side) ** 2 + (2 * y + 1 - side) ** 2 > side ** 2) {
+            rgba[(y * side + x) * 4 + 3] = 0;
+          }
         }
       }
+      const out = indexed(rgba);
+      if (out.quantized) quantizedFrames++;
+      encoder.writeFrame(out.index, rect.width, rect.height, {
+        palette: out.palette, delay: frameDelays?.get(n) ?? raw.delay, repeat: meta.loop ?? -1,
+        transparent: out.transparentIndex >= 0, transparentIndex: Math.max(0, out.transparentIndex), dispose: 2,
+      });
     }
-    const out = indexed(rgba);
-    if (out.quantized) quantizedFrames++;
-    encoder.writeFrame(out.index, rect.width, rect.height, {
-      palette: out.palette, delay: raw.delay, repeat: meta.loop ?? -1,
-      transparent: out.transparentIndex >= 0, transparentIndex: Math.max(0, out.transparentIndex), dispose: 2,
-    });
     if (raw.disposal === 2) clear(raw);
     else if (raw.disposal === 3) canvas.set(previous);
   }
