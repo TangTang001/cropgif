@@ -13,7 +13,7 @@ const preview = $('result');
 const download = $('download');
 const submit = $('compress-submit');
 const file = $('file');
-const example = 'gif-resize-sailboat-before.gif';
+const example = 'gif-compress-aurora-before.gif';
 const exampleButton = document.querySelector('[data-compress-example]');
 let source, sourceURL, resultURL;
 let busy = false;

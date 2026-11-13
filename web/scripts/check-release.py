@@ -108,12 +108,12 @@ with ZipFile(archive_path) as archive:
     assert hashlib.sha256(wasm).hexdigest() == provenance['core']['wasmSha256']
 examples = {
     f'examples/{name}.{ext}'
-    for name in ('gif-crop-before', 'gif-crop-after', 'gif-freeform-before', 'gif-freeform-after', 'gif-circle-after', 'gif-resize-sailboat-before', 'gif-resize-sailboat-after', 'gif-compress-sailboat-after')
+    for name in ('gif-crop-before', 'gif-crop-after', 'gif-freeform-before', 'gif-freeform-after', 'gif-circle-after', 'gif-resize-sailboat-before', 'gif-resize-sailboat-after', 'gif-compress-sailboat-after', 'gif-compress-aurora-before', 'gif-compress-aurora-after')
     for ext in ('gif', 'png')
 }
 examples |= {
     f'examples/avatar-{name}.{ext}'
-    for name in ('robot-before', 'robot-circle', 'cat-before', 'cat-square')
+    for name in ('robot-before', 'robot-circle', 'cat-before', 'cat-square', 'cat-circle')
     for ext in ('gif', 'png')
 }
 expected = set(pages.values()) | {'404.html', 'robots.txt', 'sitemap.xml', '_headers', 'favicon.svg', 'favicon.png', 'apple-touch-icon.png', 'social.png'} | {'licenses/' + p.name for p in notices} | source_files | examples

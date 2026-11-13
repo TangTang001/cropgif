@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/src/styles.css">
-<title>Compress GIF Online Free | GIF Crop Lab</title>
+<title>Compress GIF Online Free — GIF Compressor | GIF Crop Lab</title>
 <meta name="description" content="Compress GIFs online by reducing colors, dimensions, or frames. Compare file sizes and download your optimized GIF. Files stay on your device.">
 <link rel="canonical" href="https://gifcroplab.com/compress-gif/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#2563eb">
 <meta property="og:type" content="website"><meta property="og:site_name" content="GIF Crop Lab">
-<meta property="og:title" content="Compress GIF Online Free | GIF Crop Lab">
+<meta property="og:title" content="Compress GIF Online Free — GIF Compressor | GIF Crop Lab">
 <meta property="og:description" content="Make animated GIF files smaller in your browser.">
 <meta property="og:url" content="https://gifcroplab.com/compress-gif/"><meta property="og:image" content="https://gifcroplab.com/social.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="GIF Crop Lab — crop animated GIFs on your device">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Compress GIF Online Free | GIF Crop Lab"><meta name="twitter:description" content="Make animated GIF files smaller in your browser."><meta name="twitter:image" content="https://gifcroplab.com/social.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Compress GIF Online Free — GIF Compressor | GIF Crop Lab"><meta name="twitter:description" content="Make animated GIF files smaller in your browser."><meta name="twitter:image" content="https://gifcroplab.com/social.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -131,32 +131,93 @@
   </section>
   <section class="crop-example crop-use-cases" aria-labelledby="example-title">
     <h2 id="example-title">See GIF compression in action</h2>
-    <article class="example-card" aria-labelledby="sailboat-example-title">
+    <article class="example-card" aria-labelledby="aurora-example-title">
       <div class="example-heading">
         <div>
-          <h3 id="sailboat-example-title">Make a smaller sailboat GIF</h3>
-          <p>Scale to 50%, use up to 64 colors, and keep every second frame. The scene stays in view and the loop keeps its original duration.</p>
+          <h3 id="aurora-example-title">Compress a colorful aurora GIF</h3>
+          <p>Scale to 50%, use up to 64 colors, and keep every second frame. The result is 91.9% smaller and keeps the original loop duration.</p>
         </div>
         <button class="button example-button" data-compress-example type="button">Try this compression</button>
       </div>
       <div class="example-grid example-grid-half">
         <figure>
-          <figcaption><strong>Before</strong><span>320 × 180 px</span></figcaption>
+          <figcaption><strong>Before</strong><span>4.55 MB</span></figcaption>
           <picture>
-            <source media="(prefers-reduced-motion: reduce)" srcset="/examples/gif-resize-sailboat-before.png">
-            <img src="/examples/gif-resize-sailboat-before.gif" width="320" height="180" loading="lazy" alt="A sailboat bobbing on blue waves beneath moving clouds">
+            <source media="(prefers-reduced-motion: reduce)" srcset="/examples/gif-compress-aurora-before.png">
+            <img src="/examples/gif-compress-aurora-before.gif" width="640" height="360" loading="lazy" alt="Blue and violet aurora flowing over a mountain ridge">
           </picture>
         </figure>
         <svg class="example-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>
         <figure>
-          <figcaption><strong>After</strong><span>160 × 90 px</span></figcaption>
+          <figcaption><strong>After</strong><span>369 KB</span></figcaption>
           <picture>
-            <source media="(prefers-reduced-motion: reduce)" srcset="/examples/gif-compress-sailboat-after.png">
-            <img src="/examples/gif-compress-sailboat-after.gif" width="160" height="90" loading="lazy" alt="The full sailboat animation scaled to half its original width and height">
+            <source media="(prefers-reduced-motion: reduce)" srcset="/examples/gif-compress-aurora-after.png">
+            <img src="/examples/gif-compress-aurora-after.gif" width="320" height="180" loading="lazy" alt="The same aurora animation after compression">
           </picture>
         </figure>
       </div>
     </article>
+  </section>
+  <section class="how-section crop-guide" aria-labelledby="compression-tradeoffs">
+    <div class="how-intro"><h2 id="compression-tradeoffs">Choose the right compression settings</h2></div>
+    <div class="crop-tips">
+      <div>
+        <h3>Compare each setting on the same GIF</h3>
+        <p>Starting from the 4.55 MB aurora GIF, basic optimization plus 50% dimensions produced 1.65 MB, up to 64 colors produced 2.05 MB, and keeping every second frame produced 2.28 MB. Each run changed one setting. The combined export above was 369 KB. Use these results as an example of the tradeoffs and compare the actual sizes for your own GIF.</p>
+      </div>
+      <div>
+        <h3>Shrink dimensions when the GIF will be viewed small</h3>
+        <p>Start with dimensions when the animation will appear as a chat preview, thumbnail, or small illustration. Scaling width and height to 75% leaves about 56% of the original pixels per frame. Scaling to 50% leaves about 25%. The file size follows how well those pixels can be encoded, so 75% fewer pixels can produce a different percentage of bytes saved.</p>
+        <p>In the aurora example, shrinking the canvas from 640 &times; 360 to 320 &times; 180 makes the output fit a smaller display while retaining the entire landscape. Before choosing a smaller size, check whether viewers need to read text or inspect a small object. Thin lines and small labels are often the first details to disappear. If the display size is fixed, start with color reduction instead.</p>
+      </div>
+      <div>
+        <h3>Reduce colors on graphics with a simple palette</h3>
+        <p>Try 128 or 64 colors on interface recordings, illustrated icons, or loops made from a few solid fills. Reducing the number of colors can simplify the encoded image while leaving its size and motion intact. A GIF that already uses fewer colors than the selected limit may gain little from this setting. On a colorful clip, the same limit can cause neighboring shades to merge.</p>
+        <p>Check the areas where detail matters first. A dark blue panel and its lighter outline should still be easy to tell apart. In a gradient, look for abrupt bands where the original changed smoothly. If a low setting damages the image, go back one step and compare the file sizes. When appearance matters more than the last few bytes, the slightly larger version may be the better fit.</p>
+      </div>
+      <div>
+        <h3>Reduce frames when the motion is simple</h3>
+        <p>Keeping every second frame takes a 96-frame animation to 48 frames, and keeping every third takes it to 32. The compressor adds the skipped frame delays to the frames it keeps, so the total loop duration stays the same in the GIF file. Savings depend on how much the dropped frames changed. A repeated background can cost very little to store, while a detailed moving camera shot may have a lot of new image data in each frame.</p>
+        <p>Watch transitions, quick gestures, and animated text at normal speed. A slowly moving glow can still look smooth after frame reduction. A fast hand movement or a brief text cue may become jerky or disappear between retained frames. Keep all frames when every step matters. For very short animations, the editor disables any reduction that would leave only one frame.</p>
+      </div>
+    </div>
+  </section>
+  <section class="how-section crop-guide" aria-labelledby="gif-palette">
+    <div class="how-intro"><h2 id="gif-palette">How GIF color depth affects file size</h2></div>
+    <div class="crop-tips">
+      <div>
+        <h3>GIF uses indexed color</h3>
+        <p>A GIF stores pixels as references to a color table. Each frame can use up to 256 entries in its active table, and an animation can use different tables for different frames. Transparency uses a reserved index. Reducing colors groups similar shades into fewer entries, which can make a file smaller. The change is most visible in skies, shadows, skin tones, and other areas that rely on many closely spaced colors.</p>
+        <p>A screenshot-style animation with mostly solid colors often works well with a smaller palette. A gradient may need more colors to keep its appearance. Compare the image in the place where it will be shown. A faint band may be easy to see in a full-size preview and much less noticeable in a small chat attachment.</p>
+      </div>
+      <div>
+        <h3>When dithering helps</h3>
+        <p>Dithering mixes nearby colors in a fine pattern to make transitions look smoother with a limited palette. It can hide bands in gradients, though the extra pixel variation can increase file size or look like moving grain across frames. This compressor leaves dithering off when reducing colors. If gradients look rough, try a higher color limit or keep the original colors and reduce dimensions instead.</p>
+      </div>
+    </div>
+  </section>
+  <section class="how-section crop-guide" aria-labelledby="compression-target">
+    <div class="how-intro"><h2 id="compression-target">Work toward a file-size limit</h2></div>
+    <div class="crop-tips">
+      <div>
+        <h3>Change one setting at a time</h3>
+        <p>Run the original settings first to see what basic optimization can save. If the result is still too large, choose the setting that matters least for where the GIF will be used. A small preview usually tolerates smaller dimensions. A logo loop may tolerate fewer colors. A slow animation may tolerate fewer frames. Change one option, compare the result, and add another change only if you need more savings.</p>
+        <p>Each attempt starts with the original GIF. You can return to a higher color limit or restore frames without reopening the file. The result panel shows the actual before and after sizes. For a strict upload limit, leave a little room below the stated threshold and check the downloaded file itself before sending it.</p>
+      </div>
+      <div>
+        <h3>Why a compressed GIF can get larger</h3>
+        <p>An optimized source may already store small rectangles that contain only the pixels that change. Re-encoding can choose different rectangles, transparency, or palettes. Those choices change how efficiently repeated data compresses. Even a smaller canvas can produce a larger file if the new pixel patterns compress less efficiently. If the result panel reports an increase, keep the original or try a different combination of settings and compare again.</p>
+      </div>
+      <div>
+        <h3>Discord and Slack have different limits</h3>
+        <p>Discord documents a 20 MB attachment limit for accounts without Nitro. Paid tiers allow larger files. Check the attachment limit shown for your account, especially if the same GIF is being sent by different people. Discord avatar and emoji rules are separate from chat attachments. <a class="related-tool" href="https://support.discord.com/hc/en-us/articles/25444343291031-File-Attachments-FAQ">Discord attachment limits</a>.</p>
+        <p>For custom Slack emoji, start with a square image and aim below 128 KB. Animated GIFs can contain up to 50 frames. If the subject is wide, crop to square first. If it already fits a square, reduce dimensions and check the preview at emoji size. Lower the frame count if you still need to meet the frame limit. <a class="related-tool" href="https://slack.com/help/articles/206870177-Add-custom-emoji-and-aliases-to-your-workspace">Slack custom emoji guidelines</a>.</p>
+      </div>
+      <div>
+        <h3>When animated WebP is an option</h3>
+        <p>If the destination accepts animated WebP, compare a converted file at the same dimensions and similar visual quality. Google reports 64% savings for lossy animated WebP and 19% for lossless animated WebP in its GIF comparison. Results vary by source and encoder settings. This tool exports GIF, so use a separate converter if WebP fits your destination. <a class="related-tool" href="https://developers.google.com/speed/webp/faq#why_should_i_use_animated_webp">Google animated WebP comparison</a>.</p>
+      </div>
+    </div>
   </section>
   <section id="questions" class="faq-section">
     <div><h2>Frequently asked questions</h2></div>
@@ -166,6 +227,9 @@
       <details><summary>Why is the result larger?</summary><p>An already optimized GIF can grow when re-encoded. Keep the original if the result is larger, or try fewer colors, smaller dimensions, or fewer frames.</p></details>
       <details><summary>What if I need an exact size?</summary><p>Use <a class="related-tool" href="/resize-gif/">Resize GIF</a> to set a specific width or height.</p></details>
       <details><summary>Does my GIF leave my device?</summary><p>Your browser compresses the GIF locally. Your file stays on your device.</p></details>
+      <details><summary>Which setting should I change first?</summary><p>Start with default optimization, then reduce dimensions if the destination can display a smaller image. Keep the dimensions and try fewer colors if you need a fixed canvas.</p></details>
+      <details><summary>Can I compress to exactly 128 KB or 1 MB?</summary><p>Choose settings, then compare the actual output size with your target. If it is still too large, adjust one setting and try again.</p></details>
+      <details><summary>Can I use all three compression options together?</summary><p>Yes. Dimensions, colors, and frame reduction can be applied in the same export. Preview the combined result before downloading.</p></details>
     </div>
   </section>
   <section class="support-section" aria-labelledby="limits-title">

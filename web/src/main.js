@@ -11,6 +11,7 @@ const stage = $('stage');
 const shapeButtons = [$(circlePage ? 'circle' : 'free'), $('square')];
 const examples = {
   circle: { name: 'gif-crop-before.gif' },
+  'cat-circle': { name: 'avatar-cat-before.gif', shape: 'circle' },
   'avatar-circle': { name: 'avatar-robot-before.gif', shape: 'circle' },
   square: { name: 'gif-crop-before.gif', square: true },
   freeform: { name: 'gif-freeform-before.gif', rect: { x: 104, y: 0, width: 216, height: 180 } },

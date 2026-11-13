@@ -184,6 +184,59 @@
       </div>
     </div>
   </section>
+  <section class="how-section crop-guide" aria-labelledby="choose-resize-dimensions">
+    <div class="how-intro"><h2 id="choose-resize-dimensions">Choose the right GIF dimensions</h2></div>
+    <div class="crop-tips">
+      <div>
+        <h3>Start with the place where it will appear</h3>
+        <p>Find the width or height the destination expects before changing the file. A support article may place the GIF in a narrow column, while a slide or a product page might give it much more room. Check the available space and whether text or small controls need to be readable. A GIF showing one gesture can often be smaller than a screen recording that needs to show several menus.</p>
+        <p>Use the dimensions shown beside the original file name as your starting point. If a 960 &times; 540 GIF has to fit a 480-pixel column, set the width to 480 with Lock aspect ratio enabled. The tool calculates a height of 270. Compare the result at roughly the size it will appear. If labels are hard to read, increase the target size or crop away the surrounding interface before shrinking.</p>
+      </div>
+      <div>
+        <h3>Choose pixels for a fixed size or percentage for a quick reduction</h3>
+        <p>Use Dimensions when a form or a layout specifies a pixel value. A width of 480 means the exported GIF is 480 pixels wide, regardless of how large the preview appears in your browser. Enter either width or height with the aspect ratio locked. The other side follows the original proportions, with rounding to whole pixels.</p>
+        <p>Use Percentage when you want a smaller copy without calculating dimensions by hand. A 320 &times; 180 GIF at 50% becomes 160 &times; 90, the size used in the sailboat example. The percentage always applies to the original GIF. Changing from 50% to 75% calculates a new size from 320 &times; 180, so you can compare both options without reloading the source.</p>
+      </div>
+      <div>
+        <h3>Keep the aspect ratio when shapes matter</h3>
+        <p>Lock aspect ratio for faces, icons, lettering, and other subjects that look wrong when stretched. If a destination requires a square and your source is wide, choose the important area with the <a class="related-tool" href="/">GIF cropper</a> first. Then resize that square to the required dimensions. If the full wide scene must remain visible in a square, you will need to add space around it using an editor that supports padding.</p>
+        <p>Turn the lock off when you deliberately want to change the proportions. Enter the exact width and height and preview the whole loop. A circular object turning oval is an easy way to spot the effect. If you are unsure where the change started, choose Reset to original size to restore the original dimensions and the default ratio lock.</p>
+      </div>
+    </div>
+  </section>
+  <section class="how-section crop-guide" aria-labelledby="check-resized-animation">
+    <div class="how-intro"><h2 id="check-resized-animation">Check animation quality after resizing</h2></div>
+    <div class="crop-tips">
+      <div>
+        <h3>Preview details at the final size</h3>
+        <p>Small text, fine lines, and patterns close together can become hard to distinguish when you shrink a GIF. Review the frame where the screen has the most detail, then watch the motion through the full loop. If the steps in a tutorial are only clear when the preview is enlarged, the exported file probably needs more pixels or a tighter crop around the relevant action.</p>
+        <p>When enlarging a GIF, expect the existing pixels to cover more space. Enlarging cannot recover detail absent from the source. If the original looks blocky, start with a higher-resolution animation when one is available. If you only need to fit a larger slot, preview the result on that background to decide whether the extra pixels are worth the added file size.</p>
+      </div>
+      <div>
+        <h3>Confirm transparency and playback where the GIF will be used</h3>
+        <p>Use the result preview to check the outline of a transparent object or round avatar. Scaling changes which source pixels are sampled along its edge, so look for outlines that become rough or details that disappear. Test the downloaded file on the background where it will be displayed. A dark edge can look fine on a light preview and become more noticeable on a dark background.</p>
+        <p>Successful exports keep the frame count, frame delays, and loop setting. If the file moves in the editor and appears still elsewhere, open the downloaded GIF in a browser first. Some destinations show a static preview or apply their own playback rules. Keep the original file available until you have checked how the export behaves where it will be shared.</p>
+      </div>
+    </div>
+  </section>
+  <section class="how-section crop-guide" aria-labelledby="resize-file-size">
+    <div class="how-intro"><h2 id="resize-file-size">Balance dimensions and file size</h2></div>
+    <div class="crop-tips">
+      <div>
+        <h3>Measure bytes after exporting</h3>
+        <p>Reducing dimensions gives the encoder fewer pixels to represent, and reducing both sides has a larger effect than reducing only one. At 50% width and height, there are about one-quarter as many pixels per frame. File size also depends on the palette, repeated pixels, and how much of the scene changes between frames. Use the size displayed in the result panel to see what this particular GIF gained.</p>
+        <p>If you need to meet a file-size limit and the canvas is already the correct size, open <a class="related-tool" href="/compress-gif/">Compress GIF</a>. Try basic optimization or reduce colors before changing the dimensions again. For a smooth animation with fine gradients, keep the colors and frames where possible and compare a modest size reduction instead.</p>
+      </div>
+      <div>
+        <h3>Handle large or long animations</h3>
+        <p>The editor checks both the source and the requested output against processing limits. A GIF with hundreds of frames can exceed the total pixel budget even when the file on disk looks small. If a requested enlargement fails, try a smaller target. If the source itself exceeds the limits, use a smaller or shorter source file. Check the size and animation again after the new export.</p>
+      </div>
+      <div>
+        <h3>Make different sizes from the same source</h3>
+        <p>For a thumbnail and a larger preview, create each version from the original. Export a small copy first, then change the target dimensions in the same session for the larger version. Keep distinct file names so you can tell which version belongs where. Compare each export at its intended display size. A smaller version can work well in a message while the larger version makes instructions readable in a help article.</p>
+      </div>
+    </div>
+  </section>
   <section id="questions" class="faq-section">
     <div><h2>Frequently asked questions</h2></div>
     <div class="faq-items">
@@ -192,6 +245,9 @@
       <details><summary>Will resizing make my GIF file smaller?</summary><p>Smaller dimensions often reduce file size. The final size also depends on what changes between frames and how the animation is encoded. Check the file size shown next to the download button.</p></details>
       <details><summary>Should I resize or crop my GIF?</summary><p>Resize to scale the full image. Use the <a class="related-tool" href="/">GIF cropper</a> to remove edges or keep only part of the frame.</p></details>
       <details><summary>Does my GIF leave my device?</summary><p>Your browser reads and resizes the GIF locally. Your file stays on your device.</p></details>
+      <details><summary>Can I make a GIF larger than the original?</summary><p>Yes, within the processing limits. Increase the width or height, or use a percentage above 100. A larger canvas cannot recover missing detail.</p></details>
+      <details><summary>Why does the other dimension change by one pixel?</summary><p>GIF dimensions are whole numbers. When the original ratio produces a fraction, the editor rounds the calculated side to the nearest pixel.</p></details>
+      <details><summary>Can I make a wide GIF square without stretching it?</summary><p>Crop it to a square first and then resize. Use a padding editor if the whole wide frame needs to fit inside the square.</p></details>
     </div>
   </section>
   <section class="support-section" aria-labelledby="limits-title">
